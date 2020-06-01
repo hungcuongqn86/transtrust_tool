@@ -150,7 +150,7 @@ namespace transtrusttool
                 ReadOnlyCollection<IWebElement> eEmails = chromeDriver.FindElements(By.Id("Email"));
                 if (eEmails.Count > 0)
                 {
-                    string email = "nnmaika@vt.edu";
+                    string email = "11111111111111111111";
                     eEmails.First().Clear(); ;
                     eEmails.First().SendKeys(email);
                 }
@@ -171,7 +171,7 @@ namespace transtrusttool
 
                 if (ePasswords.Count > 0)
                 {
-                    string pass = "Studyintheus2012**";
+                    string pass = "111111111111";
                     ePasswords.First().Clear(); ;
                     ePasswords.First().SendKeys(pass);
                 }
