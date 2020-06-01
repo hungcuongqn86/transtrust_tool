@@ -35,12 +35,19 @@ namespace transtrusttool.Utils
             this._lImap4Password = new System.Windows.Forms.Label();
             this._tbImap4Username = new System.Windows.Forms.TextBox();
             this._lImap4Username = new System.Windows.Forms.Label();
-            
+
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this._tbImap4Server2 = new System.Windows.Forms.TextBox();
+            this._lImap4Server2 = new System.Windows.Forms.Label();
+            this._tbImap4Password2 = new System.Windows.Forms.TextBox();
+            this._lImap4Password2 = new System.Windows.Forms.Label();
+            this._tbImap4Username2 = new System.Windows.Forms.TextBox();
+            this._lImap4Username2 = new System.Windows.Forms.Label();
+
             this._bCancel = new System.Windows.Forms.Button();
             this._bSave = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             
             // 
@@ -59,7 +66,25 @@ namespace transtrusttool.Utils
             this.groupBox1.Size = new System.Drawing.Size(542, 123);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Imap4";
+            this.groupBox1.Text = "Account 1";
+
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this._tbImap4Server2);
+            this.groupBox2.Controls.Add(this._lImap4Server2);
+            this.groupBox2.Controls.Add(this._tbImap4Password2);
+            this.groupBox2.Controls.Add(this._lImap4Password2);
+            this.groupBox2.Controls.Add(this._tbImap4Username2);
+            this.groupBox2.Controls.Add(this._lImap4Username2);
+            this.groupBox2.Location = new System.Drawing.Point(6, 150);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(542, 123);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Account 2";
 
             // 
             // _tbImap4Server
@@ -152,6 +177,7 @@ namespace transtrusttool.Utils
             this.CancelButton = this._bCancel;
             this.ClientSize = new System.Drawing.Size(576, 379);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this._bSave);
             this.Controls.Add(this._bCancel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -163,9 +189,10 @@ namespace transtrusttool.Utils
             
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -180,8 +207,15 @@ namespace transtrusttool.Utils
         private System.Windows.Forms.TextBox _tbImap4Username;
         private System.Windows.Forms.Label _lImap4Username;
 
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox _tbImap4Server2;
+        private System.Windows.Forms.Label _lImap4Server2;
+        private System.Windows.Forms.TextBox _tbImap4Password2;
+        private System.Windows.Forms.Label _lImap4Password2;
+        private System.Windows.Forms.TextBox _tbImap4Username2;
+        private System.Windows.Forms.Label _lImap4Username2;
+
         private System.Windows.Forms.Button _bCancel;
         private System.Windows.Forms.Button _bSave;
-        private System.Windows.Forms.GroupBox groupBox3;
     }
 }
