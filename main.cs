@@ -30,6 +30,8 @@ namespace transtrusttool
         {
             InitializeComponent();
             InitializeSample();
+            label1.Text = this.Configuration.TransperfectEmail;
+            label2.Text = this.Configuration.TransperfectEmail2;
         }
 
         protected void InitializeSample()
@@ -213,6 +215,11 @@ namespace transtrusttool
                 wait.Until(waitLoading);
             }
             catch { }
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
