@@ -95,6 +95,17 @@ namespace transtrusttool.Utils
             this._tbImap4Server.Name = "_tbImap4Server";
             this._tbImap4Server.Size = new System.Drawing.Size(397, 20);
             this._tbImap4Server.TabIndex = 5;
+
+            // 
+            // _tbImap4Server2
+            // 
+            this._tbImap4Server2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this._tbImap4Server2.Location = new System.Drawing.Point(142, 71);
+            this._tbImap4Server2.Name = "_tbImap4Server2";
+            this._tbImap4Server2.Size = new System.Drawing.Size(397, 20);
+            this._tbImap4Server2.TabIndex = 5;
+
             // 
             // _lImap4Server
             // 
@@ -105,6 +116,18 @@ namespace transtrusttool.Utils
             this._lImap4Server.TabIndex = 4;
             this._lImap4Server.Text = "Server :";
             this._lImap4Server.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+
+            // 
+            // _lImap4Server2
+            // 
+            this._lImap4Server2.Location = new System.Drawing.Point(9, 71);
+            this._lImap4Server2.Name = "_lImap4Server2";
+            this._lImap4Server2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this._lImap4Server2.Size = new System.Drawing.Size(126, 19);
+            this._lImap4Server2.TabIndex = 4;
+            this._lImap4Server2.Text = "Server :";
+            this._lImap4Server2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+
             // 
             // _tbImap4Password
             // 
@@ -114,6 +137,17 @@ namespace transtrusttool.Utils
             this._tbImap4Password.Name = "_tbImap4Password";
             this._tbImap4Password.Size = new System.Drawing.Size(397, 20);
             this._tbImap4Password.TabIndex = 3;
+
+            // 
+            // _tbImap4Password2
+            // 
+            this._tbImap4Password2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this._tbImap4Password2.Location = new System.Drawing.Point(142, 45);
+            this._tbImap4Password2.Name = "_tbImap4Password2";
+            this._tbImap4Password2.Size = new System.Drawing.Size(397, 20);
+            this._tbImap4Password2.TabIndex = 3;
+
             // 
             // _lImap4Password
             // 
@@ -124,6 +158,18 @@ namespace transtrusttool.Utils
             this._lImap4Password.TabIndex = 2;
             this._lImap4Password.Text = "Password :";
             this._lImap4Password.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+
+            // 
+            // _lImap4Password2
+            // 
+            this._lImap4Password2.Location = new System.Drawing.Point(9, 45);
+            this._lImap4Password2.Name = "_lImap4Password2";
+            this._lImap4Password2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this._lImap4Password2.Size = new System.Drawing.Size(126, 19);
+            this._lImap4Password2.TabIndex = 2;
+            this._lImap4Password2.Text = "Password :";
+            this._lImap4Password2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+
             // 
             // _tbImap4Username
             // 
@@ -133,6 +179,17 @@ namespace transtrusttool.Utils
             this._tbImap4Username.Name = "_tbImap4Username";
             this._tbImap4Username.Size = new System.Drawing.Size(397, 20);
             this._tbImap4Username.TabIndex = 1;
+
+            // 
+            // _tbImap4Username2
+            // 
+            this._tbImap4Username2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this._tbImap4Username2.Location = new System.Drawing.Point(142, 19);
+            this._tbImap4Username2.Name = "_tbImap4Username2";
+            this._tbImap4Username2.Size = new System.Drawing.Size(397, 20);
+            this._tbImap4Username2.TabIndex = 1;
+
             // 
             // _lImap4Username
             // 
@@ -143,6 +200,17 @@ namespace transtrusttool.Utils
             this._lImap4Username.TabIndex = 0;
             this._lImap4Username.Text = "User name :";
             this._lImap4Username.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+
+            // 
+            // _lImap4Username
+            // 
+            this._lImap4Username2.Location = new System.Drawing.Point(9, 19);
+            this._lImap4Username2.Name = "_lImap4Username2";
+            this._lImap4Username2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this._lImap4Username2.Size = new System.Drawing.Size(126, 19);
+            this._lImap4Username2.TabIndex = 0;
+            this._lImap4Username2.Text = "User name :";
+            this._lImap4Username2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
             // 
             // _bCancel

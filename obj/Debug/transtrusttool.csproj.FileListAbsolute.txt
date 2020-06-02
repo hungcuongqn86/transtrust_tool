@@ -48,3 +48,5 @@ D:\CUONGNH\transtrust_tool\obj\Debug\transtrusttool.csproj.CopyComplete
 D:\CUONGNH\transtrust_tool\obj\Debug\transtrusttool.exe
 D:\CUONGNH\transtrust_tool\obj\Debug\transtrusttool.pdb
 D:\CUONGNH\transtrust_tool\obj\Debug\transtrusttool.csprojAssemblyReference.cache
+D:\App\transtrusttool\transtrusttool\bin\Debug\WebDriver.dll
+D:\App\transtrusttool\transtrusttool\bin\Debug\WebDriver.xml
