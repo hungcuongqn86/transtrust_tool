@@ -221,5 +221,28 @@ namespace transtrusttool
         {
 
         }
+
+        private void btnAuto1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAuto2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("This will close down the whole application. Confirm?", "Close Application", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                System.Windows.Forms.Application.Exit();
+            }
+        }
     }
 }
