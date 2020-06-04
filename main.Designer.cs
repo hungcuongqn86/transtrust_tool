@@ -28,31 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.start_btn = new System.Windows.Forms.Button();
+            this.account1_start_btn = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnAuto1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnAuto2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.btnAuto1 = new System.Windows.Forms.Button();
-            this.btnAuto2 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // start_btn
+            // account1_start_btn
             // 
-            this.start_btn.Location = new System.Drawing.Point(324, 24);
-            this.start_btn.Name = "start_btn";
-            this.start_btn.Size = new System.Drawing.Size(65, 26);
-            this.start_btn.TabIndex = 1;
-            this.start_btn.Text = "Run";
-            this.start_btn.UseVisualStyleBackColor = true;
-            this.start_btn.Click += new System.EventHandler(this.start_btn_Click);
+            this.account1_start_btn.Location = new System.Drawing.Point(324, 24);
+            this.account1_start_btn.Name = "account1_start_btn";
+            this.account1_start_btn.Size = new System.Drawing.Size(65, 26);
+            this.account1_start_btn.TabIndex = 1;
+            this.account1_start_btn.Text = "Run";
+            this.account1_start_btn.UseVisualStyleBackColor = true;
+            this.account1_start_btn.Click += new System.EventHandler(this.account1_start_btn_Click);
             // 
             // menuStrip1
             // 
@@ -92,7 +92,7 @@
             // 
             this.groupBox1.Controls.Add(this.btnAuto1);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.start_btn);
+            this.groupBox1.Controls.Add(this.account1_start_btn);
             this.groupBox1.Location = new System.Drawing.Point(12, 27);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(395, 67);
@@ -100,6 +100,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Account 1";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // btnAuto1
+            // 
+            this.btnAuto1.Location = new System.Drawing.Point(253, 24);
+            this.btnAuto1.Name = "btnAuto1";
+            this.btnAuto1.Size = new System.Drawing.Size(65, 26);
+            this.btnAuto1.TabIndex = 4;
+            this.btnAuto1.Text = "Auto";
+            this.btnAuto1.UseVisualStyleBackColor = true;
+            this.btnAuto1.Click += new System.EventHandler(this.btnAuto1_Click);
             // 
             // groupBox2
             // 
@@ -112,6 +122,16 @@
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Account 2";
+            // 
+            // btnAuto2
+            // 
+            this.btnAuto2.Location = new System.Drawing.Point(253, 24);
+            this.btnAuto2.Name = "btnAuto2";
+            this.btnAuto2.Size = new System.Drawing.Size(65, 26);
+            this.btnAuto2.TabIndex = 5;
+            this.btnAuto2.Text = "Auto";
+            this.btnAuto2.UseVisualStyleBackColor = true;
+            this.btnAuto2.Click += new System.EventHandler(this.btnAuto2_Click);
             // 
             // label2
             // 
@@ -131,26 +151,6 @@
             this.button1.Text = "Run";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // btnAuto1
-            // 
-            this.btnAuto1.Location = new System.Drawing.Point(253, 24);
-            this.btnAuto1.Name = "btnAuto1";
-            this.btnAuto1.Size = new System.Drawing.Size(65, 26);
-            this.btnAuto1.TabIndex = 4;
-            this.btnAuto1.Text = "Auto";
-            this.btnAuto1.UseVisualStyleBackColor = true;
-            this.btnAuto1.Click += new System.EventHandler(this.btnAuto1_Click);
-            // 
-            // btnAuto2
-            // 
-            this.btnAuto2.Location = new System.Drawing.Point(253, 24);
-            this.btnAuto2.Name = "btnAuto2";
-            this.btnAuto2.Size = new System.Drawing.Size(65, 26);
-            this.btnAuto2.TabIndex = 5;
-            this.btnAuto2.Text = "Auto";
-            this.btnAuto2.UseVisualStyleBackColor = true;
-            this.btnAuto2.Click += new System.EventHandler(this.btnAuto2_Click);
             // 
             // main
             // 
@@ -175,7 +175,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button start_btn;
+        private System.Windows.Forms.Button account1_start_btn;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem configToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;

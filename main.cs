@@ -109,15 +109,13 @@ namespace transtrusttool
 
         private void start_btn_Click(object sender, EventArgs e)
         {
-            /*if (worker.IsBusy)
+            if (worker.IsBusy)
                 worker.CancelAsync();
 
-            worker.RunWorkerAsync();*/
-
-            autoget();
+            worker.RunWorkerAsync();
         }
 
-        private void autoget()
+        private void autoget(string imap4UserName, string email, string pass)
         {
             string profilePath = "C:/profile";
             try
@@ -132,13 +130,14 @@ namespace transtrusttool
             }
 
             ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--user-data-dir=" + profilePath + "/" + this.Configuration.Imap4UserName);
-            options.AddArgument("profile-directory=" + this.Configuration.Imap4UserName);
+            options.AddArgument("--user-data-dir=" + profilePath + "/" + imap4UserName);
+            options.AddArgument("profile-directory=" + imap4UserName);
             options.AddArgument("disable-infobars");
             options.AddArgument("--disable-extensions");
             options.AddArgument("--start-maximized");
             chromeDriver = new ChromeDriver(options);
-            chromeDriver.Url = "https://dashboard.transperfect.com/";
+            // chromeDriver.Url = "https://dashboard.transperfect.com/";
+            chromeDriver.Url = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
             chromeDriver.Navigate();
             waitLoading();
 
@@ -146,13 +145,25 @@ namespace transtrusttool
             waitLoading();
             // If nologin
             string url = chromeDriver.Url;
-            if (url.Contains("https://sso.transperfect.com/Account/Login"))
+            if (url.Contains("gl-tdcprod1.translations.com/PD/login"))
+            {
+                // confirm login
+                ReadOnlyCollection<IWebElement> eloginwithemailbutton = chromeDriver.FindElements(By.Id("loginwithemail-button"));
+                if (eloginwithemailbutton.Count > 0)
+                {
+                    eloginwithemailbutton.First().Click();
+                    waitLoading();
+                    System.Threading.Thread.Sleep(2000);
+                }
+            }
+
+            url = chromeDriver.Url;
+            if (url.Contains("sso.transperfect.com/Account/Login"))
             {
                 // SendKeys email
                 ReadOnlyCollection<IWebElement> eEmails = chromeDriver.FindElements(By.Id("Email"));
                 if (eEmails.Count > 0)
                 {
-                    string email = "11111111111111111111";
                     eEmails.First().Clear(); ;
                     eEmails.First().SendKeys(email);
                 }
@@ -167,13 +178,13 @@ namespace transtrusttool
                     {
                         SubmitLogin.First().Click();
                         waitLoading();
+                        System.Threading.Thread.Sleep(2000);
                         ePasswords = chromeDriver.FindElements(By.Id("Password"));
                     }
                 }
 
                 if (ePasswords.Count > 0)
                 {
-                    string pass = "111111111111";
                     ePasswords.First().Clear(); ;
                     ePasswords.First().SendKeys(pass);
                 }
@@ -187,10 +198,8 @@ namespace transtrusttool
                     waitLoading();
                 }
             }
-            else
-            {
 
-            }
+
         }
 
         private void waitLoading()
@@ -243,6 +252,11 @@ namespace transtrusttool
             {
                 System.Windows.Forms.Application.Exit();
             }
+        }
+
+        private void account1_start_btn_Click(object sender, EventArgs e)
+        {
+            autoget(this.Configuration.Imap4UserName, this.Configuration.TransperfectEmail, this.Configuration.TransperfectPass);
         }
     }
 }
