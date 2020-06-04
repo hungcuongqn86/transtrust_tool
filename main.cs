@@ -196,10 +196,19 @@ namespace transtrusttool
                 {
                     SubmitLogin2.First().Click();
                     waitLoading();
+                    System.Threading.Thread.Sleep(2000);
                 }
             }
 
+            // button-1217 -- Close
+            ReadOnlyCollection<IWebElement> button1217 = chromeDriver.FindElements(By.Id("button-1217"));
+            if (button1217.Count > 0)
+            {
+                button1217.First().Click();
+                waitLoading();
+            }
 
+            
         }
 
         private void waitLoading()
