@@ -149,23 +149,34 @@ namespace transtrusttool
             catch
             {
                 logWriter.LogWrite("Error, Could not create directory for saving profiles!");
+                logWriter.LogWrite("------------------------------------------------");
+                return;
             }
 
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--user-data-dir=" + profilePath + "/" + imap4UserName);
-            options.AddArgument("profile-directory=" + imap4UserName);
-            options.AddArgument("disable-infobars");
-            options.AddArgument("--disable-extensions");
-            options.AddArgument("--start-maximized");
-            chromeDriver = new ChromeDriver(options);
-            chromeDriver.Url = avaliableUrl;
-            chromeDriver.Navigate();
-            waitLoading();
+            try
+            {
+                ChromeOptions options = new ChromeOptions();
+                options.AddArgument("--user-data-dir=" + profilePath + "/" + imap4UserName);
+                options.AddArgument("profile-directory=" + imap4UserName);
+                options.AddArgument("disable-infobars");
+                options.AddArgument("--disable-extensions");
+                options.AddArgument("--start-maximized");
+                chromeDriver = new ChromeDriver(options);
+                chromeDriver.Url = avaliableUrl;
+                chromeDriver.Navigate();
+                waitLoading();
 
-            System.Threading.Thread.Sleep(5000);
+                System.Threading.Thread.Sleep(5000);
+            }
+            catch
+            {
+                logWriter.LogWrite("Error, Could not open profiles!");
+                logWriter.LogWrite("------------------------------------------------");
+                return;
+            }
             // If nologin
             string url = chromeDriver.Url;
-            if (url.Contains("gl-tdcprod1.translations.com/PD/login"))
+            if (url.Contains("gl-tdcprod1.translations.com/PD/login") || url.Contains("gl-tptprod1.transperfect.com/PD/login"))
             {
                 // confirm login
                 ReadOnlyCollection<IWebElement> eloginwithemailbutton = chromeDriver.FindElements(By.Id("loginwithemail-button"));
@@ -174,6 +185,7 @@ namespace transtrusttool
                     eloginwithemailbutton.First().Click();
                     waitLoading();
                     System.Threading.Thread.Sleep(5000);
+                    logWriter.LogWrite("login with email...");
                 }
             }
 
@@ -218,6 +230,16 @@ namespace transtrusttool
                     waitLoading();
                     System.Threading.Thread.Sleep(2000);
                 }
+
+                logWriter.LogWrite("login...");
+            }
+
+            url = chromeDriver.Url;
+            if (url.Contains("sso.transperfect.com/Account/Login"))
+            {
+                logWriter.LogWrite("Login fall!");
+                chromeDriver.Quit();
+                return;
             }
 
             // button-1217 -- Close
@@ -250,13 +272,13 @@ namespace transtrusttool
             if (submission.Count > 0)
             {
                 submission.First().FindElement(By.XPath("..")).Click();
-                logWriter.LogWrite("SubmissionID = " + submission.First().Text);
                 waitLoading();
                 System.Threading.Thread.Sleep(1000);
 
                 ReadOnlyCollection<IWebElement> buttonpd_job_info_action = chromeDriver.FindElements(By.XPath("//span[text()='Job Info' and contains(@id, 'pd_job_info_action')]"));
                 if (buttonpd_job_info_action.Count > 0)
                 {
+                    logWriter.LogWrite("SubmissionID = " + submission.First().Text);
                     IWebElement abuttonpd_job_info_action = buttonpd_job_info_action.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
                     string tbuttonpd_job_info_action = abuttonpd_job_info_action.TagName;
                     if (tbuttonpd_job_info_action == "a")
@@ -290,12 +312,20 @@ namespace transtrusttool
                         string tagname = abuttonSubmit.TagName;
                         if (tagname == "a")
                         {
-                            // abuttonSubmit.Click();
+                            abuttonSubmit.Click();
                             logWriter.LogWrite("Submit...");
                         }
                         waitLoading();
                     }
                 }
+                else
+                {
+                    logWriter.LogWrite("Not submission!");
+                }
+            }
+            else
+            {
+                logWriter.LogWrite("Not submission!");
             }
 
             System.Threading.Thread.Sleep(5000);
@@ -340,11 +370,6 @@ namespace transtrusttool
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("This will close down the whole application. Confirm?", "Close Application", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -356,8 +381,37 @@ namespace transtrusttool
         private void account1_start_btn_Click(object sender, EventArgs e)
         {
             // this.submissionId = "0614938";
+            logWriter.LogWrite("------------------------------------------------");
             logWriter.LogWrite("account1_start_btn_Click");
+            avaliableUrl = tdcAvaliableUrl;
             autoget(this.Configuration.Imap4UserName, this.Configuration.TransperfectEmail, this.Configuration.TransperfectPass);
+        }
+
+        private void account2_start_btn_Click(object sender, EventArgs e)
+        {
+            // this.submissionId = "0614938";
+            logWriter.LogWrite("------------------------------------------------");
+            logWriter.LogWrite("account2_start_btn_Click");
+            avaliableUrl = tdcAvaliableUrl;
+            autoget(this.Configuration.Imap4UserName2, this.Configuration.TransperfectEmail2, this.Configuration.TransperfectPass2);
+        }
+
+        private void account1TptRun_Click(object sender, EventArgs e)
+        {
+            // this.submissionId = "0614938";
+            logWriter.LogWrite("------------------------------------------------");
+            logWriter.LogWrite("account1TptRun_Click");
+            avaliableUrl = tptAvaliableUrl;
+            autoget(this.Configuration.Imap4UserName, this.Configuration.TransperfectEmail, this.Configuration.TransperfectPass);
+        }
+
+        private void account2TptRun_Click(object sender, EventArgs e)
+        {
+            // this.submissionId = "0614938";
+            logWriter.LogWrite("------------------------------------------------");
+            logWriter.LogWrite("account2TptRun_Click");
+            avaliableUrl = tptAvaliableUrl;
+            autoget(this.Configuration.Imap4UserName2, this.Configuration.TransperfectEmail2, this.Configuration.TransperfectPass2);
         }
     }
 }
