@@ -23,14 +23,17 @@ namespace transtrusttool
     public partial class main : Form
     {
         public LogWriter logWriter;
-        public static Imap4Client imap;
-        public BackgroundWorker worker;
+        public static Imap4Client imap1;
+        public static Imap4Client imap2;
+        public BackgroundWorker worker1;
+        public BackgroundWorker worker2;
         ChromeDriver chromeDriver;
         string submissionId;
         string dashboardUrl = "https://dashboard.transperfect.com/";
         string tdcAvaliableUrl = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
         string tptAvaliableUrl = "https://gl-tptprod1.transperfect.com/PD/#userMenuAVAILABLE_SUBMISSION";
         string avaliableUrl = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
+        string proSender = "hungcuongqn86@gmail.com";
 
         private SamplesConfiguration _configuration;
         public main()
@@ -44,31 +47,33 @@ namespace transtrusttool
 
         protected void InitializeSample()
         {
-            worker = new BackgroundWorker();
-            worker.DoWork += new DoWorkEventHandler(StartIdleProcess);
+            worker1 = new BackgroundWorker();
+            worker2 = new BackgroundWorker();
+            worker1.DoWork += new DoWorkEventHandler(StartIdleProcess1);
+            worker2.DoWork += new DoWorkEventHandler(StartIdleProcess2);
         }
 
-        private void StartIdleProcess(object sender, DoWorkEventArgs e)
+        private void StartIdleProcess1(object sender, DoWorkEventArgs e)
         {
-            if (imap != null && imap.IsConnected)
+            if (imap1 != null && imap1.IsConnected)
             {
-                imap.StopIdle();
-                imap.Disconnect();
+                imap1.StopIdle();
+                imap1.Disconnect();
             }
             if (this.Configuration.Imap4Server != null)
             {
                 try
                 {
-                    imap = new Imap4Client();
-                    imap.NewMessageReceived += new NewMessageReceivedEventHandler(NewMessageReceived);
+                    imap1 = new Imap4Client();
+                    imap1.NewMessageReceived += new NewMessageReceivedEventHandler(NewMessageReceived1);
                     //worker.ReportProgress(1, "Connection...");
-                    imap.ConnectSsl(this.Configuration.Imap4Server, 993);
+                    imap1.ConnectSsl(this.Configuration.Imap4Server, 993);
                     //worker.ReportProgress(0, "Login...");
-                    imap.Login(this.Configuration.Imap4UserName, this.Configuration.Imap4Password);
+                    imap1.Login(this.Configuration.Imap4UserName, this.Configuration.Imap4Password);
                     //worker.ReportProgress(0, "Select 'inbox'...");
-                    imap.SelectMailbox("inbox");
+                    imap1.SelectMailbox("inbox");
                     //worker.ReportProgress(0, "Start idle...");
-                    imap.StartIdle();
+                    imap1.StartIdle();
                 }
                 catch
                 {
@@ -77,25 +82,105 @@ namespace transtrusttool
             }
         }
 
-        public static void NewMessageReceived(object source, NewMessageReceivedEventArgs e)
+        private void StartIdleProcess2(object sender, DoWorkEventArgs e)
         {
-            Mailbox inbox = imap.SelectMailbox("inbox");
+            if (imap2 != null && imap2.IsConnected)
+            {
+                imap2.StopIdle();
+                imap2.Disconnect();
+            }
+            if (this.Configuration.Imap4Server2 != null)
+            {
+                try
+                {
+                    imap2 = new Imap4Client();
+                    imap2.NewMessageReceived += new NewMessageReceivedEventHandler(NewMessageReceived2);
+                    //worker.ReportProgress(1, "Connection...");
+                    imap2.ConnectSsl(this.Configuration.Imap4Server2, 993);
+                    //worker.ReportProgress(0, "Login...");
+                    imap2.Login(this.Configuration.Imap4UserName2, this.Configuration.Imap4Password2);
+                    //worker.ReportProgress(0, "Select 'inbox'...");
+                    imap2.SelectMailbox("inbox");
+                    //worker.ReportProgress(0, "Start idle...");
+                    imap2.StartIdle();
+                }
+                catch
+                {
+                    MessageBox.Show("Error, Not login email!");
+                }
+            }
+        }
+
+        public void NewMessageReceived1(object source, NewMessageReceivedEventArgs e)
+        {
+            Mailbox inbox = imap1.SelectMailbox("inbox");
             ActiveUp.Net.Mail.Message message = inbox.Fetch.MessageObject(e.MessageCount);
-            if (message.From.Email == "hungcuongqn86@gmail.com")
+            if (message.From.Email == proSender)
             {
                 string[] subjectPath = message.Subject.Split('|');
                 if(subjectPath.Length >= 3)
                 {
                     if (subjectPath[2].Contains("Job Info to review"))
                     {
-                        // avaliableUrl = "";
-                        // autoget();
+                        // string submissionId
+                        string[] submissionPath = subjectPath[1].Trim().Split(' ');
+                        if (submissionPath.Length >= 2)
+                        {
+                            runAuto(message.Subject, 
+                                subjectPath[0].Trim(), 
+                                submissionPath[1].Trim(), 
+                                this.Configuration.Imap4UserName, 
+                                this.Configuration.TransperfectEmail, 
+                                this.Configuration.TransperfectPass);
+                        }
                     }
                 }
             }
-
-            // autoget();
             // imap4.StopIdle();
+        }
+
+        public void NewMessageReceived2(object source, NewMessageReceivedEventArgs e)
+        {
+            Mailbox inbox = imap2.SelectMailbox("inbox");
+            ActiveUp.Net.Mail.Message message = inbox.Fetch.MessageObject(e.MessageCount);
+            if (message.From.Email == proSender)
+            {
+                string[] subjectPath = message.Subject.Split('|');
+                if(subjectPath.Length >= 3)
+                {
+                    if (subjectPath[2].Contains("Job Info to review"))
+                    {
+                        // string submissionId
+                        string[] submissionPath = subjectPath[1].Trim().Split(' ');
+                        if (submissionPath.Length >= 2)
+                        {
+                            runAuto(message.Subject, 
+                                subjectPath[0].Trim(), 
+                                submissionPath[1].Trim(), 
+                                this.Configuration.Imap4UserName2, 
+                                this.Configuration.TransperfectEmail2, 
+                                this.Configuration.TransperfectPass2);
+                        }
+                    }
+                }
+            }
+            // imap4.StopIdle();
+        }
+
+        private void runAuto(string subject, string endpoint, string submission, string imap4UserName, string transperfectEmail, string transperfectPass)
+        {
+            string msg = "Email " + imap4UserName + ", Subject: " + subject;
+            logWriter.LogWrite(msg);
+            submissionId = submission;
+            if (endpoint == "TDC-PD")
+            {
+                avaliableUrl = tdcAvaliableUrl;
+            }
+            if (endpoint == "TPT-PD")
+            {
+                avaliableUrl = tptAvaliableUrl;
+            }
+            autoget(imap4UserName, transperfectEmail, transperfectPass);
         }
 
         public SamplesConfiguration Configuration
@@ -357,17 +442,34 @@ namespace transtrusttool
             catch { }
         }
 
+        private void loading(bool status)
+        {
+            btnAuto1.Enabled = status;
+            btnAuto2.Enabled = status;
+            account1_start_btn.Enabled = status;
+            account1TptRun.Enabled = status;
+            account2_start_btn.Enabled = status;
+            account2TptRun.Enabled = status;
+        }
+
         private void btnAuto1_Click(object sender, EventArgs e)
         {
-            if (worker.IsBusy)
-                worker.CancelAsync();
+            if (worker1.IsBusy)
+                worker1.CancelAsync();
 
-            worker.RunWorkerAsync();
+            worker1.RunWorkerAsync();
+            logWriter.LogWrite("btnAuto1_Click...");
+            loading(false);
         }
 
         private void btnAuto2_Click(object sender, EventArgs e)
         {
+            if (worker2.IsBusy)
+                worker2.CancelAsync();
 
+            worker2.RunWorkerAsync();
+            logWriter.LogWrite("btnAuto2_Click...");
+            loading(false);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -381,37 +483,45 @@ namespace transtrusttool
         private void account1_start_btn_Click(object sender, EventArgs e)
         {
             // this.submissionId = "0614938";
+            loading(false);
             logWriter.LogWrite("------------------------------------------------");
             logWriter.LogWrite("account1_start_btn_Click");
             avaliableUrl = tdcAvaliableUrl;
             autoget(this.Configuration.Imap4UserName, this.Configuration.TransperfectEmail, this.Configuration.TransperfectPass);
+            loading(true);
         }
 
         private void account2_start_btn_Click(object sender, EventArgs e)
         {
             // this.submissionId = "0614938";
+            loading(false);
             logWriter.LogWrite("------------------------------------------------");
             logWriter.LogWrite("account2_start_btn_Click");
             avaliableUrl = tdcAvaliableUrl;
             autoget(this.Configuration.Imap4UserName2, this.Configuration.TransperfectEmail2, this.Configuration.TransperfectPass2);
+            loading(true);
         }
 
         private void account1TptRun_Click(object sender, EventArgs e)
         {
             // this.submissionId = "0614938";
+            loading(false);
             logWriter.LogWrite("------------------------------------------------");
             logWriter.LogWrite("account1TptRun_Click");
             avaliableUrl = tptAvaliableUrl;
             autoget(this.Configuration.Imap4UserName, this.Configuration.TransperfectEmail, this.Configuration.TransperfectPass);
+            loading(true);
         }
 
         private void account2TptRun_Click(object sender, EventArgs e)
         {
             // this.submissionId = "0614938";
+            loading(false);
             logWriter.LogWrite("------------------------------------------------");
             logWriter.LogWrite("account2TptRun_Click");
             avaliableUrl = tptAvaliableUrl;
             autoget(this.Configuration.Imap4UserName2, this.Configuration.TransperfectEmail2, this.Configuration.TransperfectPass2);
+            loading(true);
         }
     }
 }
