@@ -22,16 +22,20 @@ namespace transtrusttool
 {
     public partial class main : Form
     {
+        public LogWriter logWriter;
         public static Imap4Client imap;
         public BackgroundWorker worker;
         ChromeDriver chromeDriver;
         string submissionId;
         string dashboardUrl = "https://dashboard.transperfect.com/";
+        string tdcAvaliableUrl = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
+        string tptAvaliableUrl = "https://gl-tptprod1.transperfect.com/PD/#userMenuAVAILABLE_SUBMISSION";
         string avaliableUrl = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
 
         private SamplesConfiguration _configuration;
         public main()
         {
+            logWriter = new LogWriter("Open app...");
             InitializeComponent();
             InitializeSample();
             label1.Text = this.Configuration.TransperfectEmail;
@@ -144,7 +148,7 @@ namespace transtrusttool
             }
             catch
             {
-                MessageBox.Show("Error, Could not create directory for saving profiles!");
+                logWriter.LogWrite("Error, Could not create directory for saving profiles!");
             }
 
             ChromeOptions options = new ChromeOptions();
@@ -246,6 +250,7 @@ namespace transtrusttool
             if (submission.Count > 0)
             {
                 submission.First().FindElement(By.XPath("..")).Click();
+                logWriter.LogWrite("SubmissionID = " + submission.First().Text);
                 waitLoading();
                 System.Threading.Thread.Sleep(1000);
 
@@ -285,7 +290,8 @@ namespace transtrusttool
                         string tagname = abuttonSubmit.TagName;
                         if (tagname == "a")
                         {
-                            abuttonSubmit.Click();
+                            // abuttonSubmit.Click();
+                            logWriter.LogWrite("Submit...");
                         }
                         waitLoading();
                     }
@@ -294,7 +300,7 @@ namespace transtrusttool
 
             System.Threading.Thread.Sleep(5000);
             chromeDriver.Quit();
-            MessageBox.Show("Done!");
+            logWriter.LogWrite("Done!");
         }
 
         private void waitLoading()
@@ -350,6 +356,7 @@ namespace transtrusttool
         private void account1_start_btn_Click(object sender, EventArgs e)
         {
             // this.submissionId = "0614938";
+            logWriter.LogWrite("account1_start_btn_Click");
             autoget(this.Configuration.Imap4UserName, this.Configuration.TransperfectEmail, this.Configuration.TransperfectPass);
         }
     }
