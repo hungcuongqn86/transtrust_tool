@@ -11,6 +11,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,6 +25,9 @@ namespace transtrusttool
         public static Imap4Client imap;
         public BackgroundWorker worker;
         ChromeDriver chromeDriver;
+        string submissionId;
+        string dashboardUrl = "https://dashboard.transperfect.com/";
+        string avaliableUrl = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
 
         private SamplesConfiguration _configuration;
         public main()
@@ -49,23 +53,45 @@ namespace transtrusttool
             }
             if (this.Configuration.Imap4Server != null)
             {
-                imap = new Imap4Client();
-                imap.NewMessageReceived += new NewMessageReceivedEventHandler(NewMessageReceived);
-                //worker.ReportProgress(1, "Connection...");
-                imap.ConnectSsl(this.Configuration.Imap4Server, 993);
-                //worker.ReportProgress(0, "Login...");
-                imap.Login(this.Configuration.Imap4UserName, this.Configuration.Imap4Password);
-                //worker.ReportProgress(0, "Select 'inbox'...");
-                imap.SelectMailbox("inbox");
-                //worker.ReportProgress(0, "Start idle...");
-                imap.StartIdle();
+                try
+                {
+                    imap = new Imap4Client();
+                    imap.NewMessageReceived += new NewMessageReceivedEventHandler(NewMessageReceived);
+                    //worker.ReportProgress(1, "Connection...");
+                    imap.ConnectSsl(this.Configuration.Imap4Server, 993);
+                    //worker.ReportProgress(0, "Login...");
+                    imap.Login(this.Configuration.Imap4UserName, this.Configuration.Imap4Password);
+                    //worker.ReportProgress(0, "Select 'inbox'...");
+                    imap.SelectMailbox("inbox");
+                    //worker.ReportProgress(0, "Start idle...");
+                    imap.StartIdle();
+                }
+                catch
+                {
+                    MessageBox.Show("Error, Not login email!");
+                }
             }
         }
 
         public static void NewMessageReceived(object source, NewMessageReceivedEventArgs e)
         {
-            MessageBox.Show("New message received :" + e.MessageCount);
-            //imap4.StopIdle();
+            Mailbox inbox = imap.SelectMailbox("inbox");
+            ActiveUp.Net.Mail.Message message = inbox.Fetch.MessageObject(e.MessageCount);
+            if (message.From.Email == "hungcuongqn86@gmail.com")
+            {
+                string[] subjectPath = message.Subject.Split('|');
+                if(subjectPath.Length >= 3)
+                {
+                    if (subjectPath[2].Contains("Job Info to review"))
+                    {
+                        // avaliableUrl = "";
+                        // autoget();
+                    }
+                }
+            }
+
+            // autoget();
+            // imap4.StopIdle();
         }
 
         public SamplesConfiguration Configuration
@@ -107,14 +133,6 @@ namespace transtrusttool
             configForm.ShowDialog();
         }
 
-        private void start_btn_Click(object sender, EventArgs e)
-        {
-            if (worker.IsBusy)
-                worker.CancelAsync();
-
-            worker.RunWorkerAsync();
-        }
-
         private void autoget(string imap4UserName, string email, string pass)
         {
             string profilePath = "C:/profile";
@@ -136,13 +154,11 @@ namespace transtrusttool
             options.AddArgument("--disable-extensions");
             options.AddArgument("--start-maximized");
             chromeDriver = new ChromeDriver(options);
-            // chromeDriver.Url = "https://dashboard.transperfect.com/";
-            chromeDriver.Url = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
+            chromeDriver.Url = avaliableUrl;
             chromeDriver.Navigate();
             waitLoading();
 
-            System.Threading.Thread.Sleep(2000);
-            waitLoading();
+            System.Threading.Thread.Sleep(5000);
             // If nologin
             string url = chromeDriver.Url;
             if (url.Contains("gl-tdcprod1.translations.com/PD/login"))
@@ -153,7 +169,7 @@ namespace transtrusttool
                 {
                     eloginwithemailbutton.First().Click();
                     waitLoading();
-                    System.Threading.Thread.Sleep(2000);
+                    System.Threading.Thread.Sleep(5000);
                 }
             }
 
@@ -201,14 +217,84 @@ namespace transtrusttool
             }
 
             // button-1217 -- Close
-            ReadOnlyCollection<IWebElement> button1217 = chromeDriver.FindElements(By.Id("button-1217"));
-            if (button1217.Count > 0)
+            System.Threading.Thread.Sleep(5000);
+            ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+            if (buttonClose.Count > 0)
             {
-                button1217.First().Click();
+                IWebElement abuttonClose = buttonClose.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                string tbuttonClose = abuttonClose.TagName;
+                if (tbuttonClose == "a")
+                {
+                    abuttonClose.Click();
+                }
                 waitLoading();
             }
 
+            //select submission
+            System.Threading.Thread.Sleep(3000);
+            string xpath;
+            if (String.IsNullOrEmpty(this.submissionId))
+            {
+                xpath = "//div[contains(@class, 'x-grid-cell-inner')]";
+            }
+            else
+            {
+                xpath = "//div[text()='" + this.submissionId + "' and contains(@class, 'x-grid-cell-inner')]";
+            }
             
+            ReadOnlyCollection<IWebElement> submission = chromeDriver.FindElements(By.XPath(xpath));
+            if (submission.Count > 0)
+            {
+                submission.First().FindElement(By.XPath("..")).Click();
+                waitLoading();
+                System.Threading.Thread.Sleep(1000);
+
+                ReadOnlyCollection<IWebElement> buttonpd_job_info_action = chromeDriver.FindElements(By.XPath("//span[text()='Job Info' and contains(@id, 'pd_job_info_action')]"));
+                if (buttonpd_job_info_action.Count > 0)
+                {
+                    IWebElement abuttonpd_job_info_action = buttonpd_job_info_action.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                    string tbuttonpd_job_info_action = abuttonpd_job_info_action.TagName;
+                    if (tbuttonpd_job_info_action == "a")
+                    {
+                        abuttonpd_job_info_action.Click();
+                    }
+                    waitLoading();
+                    System.Threading.Thread.Sleep(5000);
+
+                    // pdSubmissionBudgetJobInfoColumnRadioAccept
+                    ReadOnlyCollection<IWebElement> pdSubmissionBudgetJobInfoColumnRadioAccept = chromeDriver.FindElements(By.XPath("//td[contains(@class, 'pdSubmissionBudgetJobInfoColumnRadioAccept')]"));
+                    if (pdSubmissionBudgetJobInfoColumnRadioAccept.Count > 0)
+                    {
+                        pdSubmissionBudgetJobInfoColumnRadioAccept.First().Click();
+                        waitLoading();
+                    }
+
+                    //checkbox-inputEl
+                    ReadOnlyCollection<IWebElement> checkboxinputEl = chromeDriver.FindElements(By.XPath("//label[contains(@id, 'checkbox-') and contains(@id, '-boxLabelEl')]"));
+                    if (checkboxinputEl.Count > 0)
+                    {
+                        checkboxinputEl.First().Click();
+                        waitLoading();
+                    }
+
+                    //buttonSubmit
+                    ReadOnlyCollection<IWebElement> buttonSubmit = chromeDriver.FindElements(By.XPath("//span[text()='Submit' and contains(@id, 'btnInnerEl')]"));
+                    if (buttonSubmit.Count > 0)
+                    {
+                        IWebElement abuttonSubmit = buttonSubmit.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                        string tagname = abuttonSubmit.TagName;
+                        if (tagname == "a")
+                        {
+                            abuttonSubmit.Click();
+                        }
+                        waitLoading();
+                    }
+                }
+            }
+
+            System.Threading.Thread.Sleep(5000);
+            chromeDriver.Quit();
+            MessageBox.Show("Done!");
         }
 
         private void waitLoading()
@@ -235,14 +321,12 @@ namespace transtrusttool
             catch { }
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnAuto1_Click(object sender, EventArgs e)
         {
+            if (worker.IsBusy)
+                worker.CancelAsync();
 
+            worker.RunWorkerAsync();
         }
 
         private void btnAuto2_Click(object sender, EventArgs e)
@@ -265,6 +349,7 @@ namespace transtrusttool
 
         private void account1_start_btn_Click(object sender, EventArgs e)
         {
+            // this.submissionId = "0614938";
             autoget(this.Configuration.Imap4UserName, this.Configuration.TransperfectEmail, this.Configuration.TransperfectPass);
         }
     }
