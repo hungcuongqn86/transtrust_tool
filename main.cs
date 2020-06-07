@@ -23,6 +23,7 @@ namespace transtrusttool
     public partial class main : Form
     {
         public LogWriter logWriter;
+        public static main thisForm;
         public static Imap4Client imap1;
         public static Imap4Client imap2;
         public BackgroundWorker worker1;
@@ -33,13 +34,14 @@ namespace transtrusttool
         string tdcAvaliableUrl = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
         string tptAvaliableUrl = "https://gl-tptprod1.transperfect.com/PD/#userMenuAVAILABLE_SUBMISSION";
         string avaliableUrl = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
-        string proSender = "hungcuongqn86@gmail.com";
+        public static string proSender = "hungcuongqn86@gmail.com";
 
         private SamplesConfiguration _configuration;
         public main()
         {
             logWriter = new LogWriter("Open app...");
             InitializeComponent();
+            thisForm = this;
             InitializeSample();
             label1.Text = this.Configuration.TransperfectEmail;
             label2.Text = this.Configuration.TransperfectEmail2;
@@ -73,6 +75,7 @@ namespace transtrusttool
                     //worker.ReportProgress(0, "Select 'inbox'...");
                     imap1.SelectMailbox("inbox");
                     //worker.ReportProgress(0, "Start idle...");
+                    logWriter.LogWrite("imap1.StartIdle ...");
                     imap1.StartIdle();
                 }
                 catch
@@ -102,6 +105,7 @@ namespace transtrusttool
                     //worker.ReportProgress(0, "Select 'inbox'...");
                     imap2.SelectMailbox("inbox");
                     //worker.ReportProgress(0, "Start idle...");
+                    logWriter.LogWrite("imap2.StartIdle ...");
                     imap2.StartIdle();
                 }
                 catch
@@ -111,60 +115,102 @@ namespace transtrusttool
             }
         }
 
-        public void NewMessageReceived1(object source, NewMessageReceivedEventArgs e)
+        public static void NewMessageReceived1(object source, NewMessageReceivedEventArgs e)
         {
-            Mailbox inbox = imap1.SelectMailbox("inbox");
-            ActiveUp.Net.Mail.Message message = inbox.Fetch.MessageObject(e.MessageCount);
-            if (message.From.Email == proSender)
+            thisForm.logWriter.LogWrite("NewMessageReceived1---");
+            using (var client = new Imap4Client())
             {
-                string[] subjectPath = message.Subject.Split('|');
-                if(subjectPath.Length >= 3)
+                try
                 {
-                    if (subjectPath[2].Contains("Job Info to review"))
+                    client.ConnectSsl(thisForm.Configuration.Imap4Server, 993);
+                    client.Login(thisForm.Configuration.Imap4UserName, thisForm.Configuration.Imap4Password);
+                    Mailbox inbox = client.SelectMailbox("inbox");
+                    if (inbox.MessageCount > 0)
                     {
-                        // string submissionId
-                        string[] submissionPath = subjectPath[1].Trim().Split(' ');
-                        if (submissionPath.Length >= 2)
+                        ActiveUp.Net.Mail.Message message = inbox.Fetch.MessageObject(inbox.MessageCount);
+                        thisForm.logWriter.LogWrite(string.Format("{3} Subject: {0} From :{1} Message Body {2}"
+                                        , message.Subject, message.From.Email, message.BodyText, inbox.MessageCount.ToString("00000")));
+                        if (message.From.Email == proSender)
                         {
-                            runAuto(message.Subject, 
-                                subjectPath[0].Trim(), 
-                                submissionPath[1].Trim(), 
-                                this.Configuration.Imap4UserName, 
-                                this.Configuration.TransperfectEmail, 
-                                this.Configuration.TransperfectPass);
+                            string[] subjectPath = message.Subject.Split('|');
+                            if (subjectPath.Length >= 3)
+                            {
+                                if (subjectPath[2].Contains("Job Info to review"))
+                                {
+                                    // string submissionId
+                                    string[] submissionPath = subjectPath[1].Trim().Split(' ');
+                                    if (submissionPath.Length >= 2)
+                                    {
+                                        thisForm.runAuto(message.Subject,
+                                            subjectPath[0].Trim(),
+                                            submissionPath[1].Trim(),
+                                            thisForm.Configuration.Imap4UserName,
+                                            thisForm.Configuration.TransperfectEmail,
+                                            thisForm.Configuration.TransperfectPass);
+                                    }
+                                }
+                            }
                         }
                     }
+                    else
+                    {
+                        thisForm.logWriter.LogWrite("NewMessageReceived1: There is no message in the imap4 account");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    thisForm.logWriter.LogWrite(ex.Message);
                 }
             }
-            // imap4.StopIdle();
         }
 
-        public void NewMessageReceived2(object source, NewMessageReceivedEventArgs e)
+        public static void NewMessageReceived2(object source, NewMessageReceivedEventArgs e)
         {
-            Mailbox inbox = imap2.SelectMailbox("inbox");
-            ActiveUp.Net.Mail.Message message = inbox.Fetch.MessageObject(e.MessageCount);
-            if (message.From.Email == proSender)
+            thisForm.logWriter.LogWrite("NewMessageReceived2---");
+            using (var client = new Imap4Client())
             {
-                string[] subjectPath = message.Subject.Split('|');
-                if(subjectPath.Length >= 3)
+                try
                 {
-                    if (subjectPath[2].Contains("Job Info to review"))
+                    client.ConnectSsl(thisForm.Configuration.Imap4Server2, 993);
+                    client.Login(thisForm.Configuration.Imap4UserName2, thisForm.Configuration.Imap4Password2);
+                    Mailbox inbox = client.SelectMailbox("inbox");
+                    if (inbox.MessageCount > 0)
                     {
-                        // string submissionId
-                        string[] submissionPath = subjectPath[1].Trim().Split(' ');
-                        if (submissionPath.Length >= 2)
+                        ActiveUp.Net.Mail.Message message = inbox.Fetch.MessageObject(inbox.MessageCount);
+                        thisForm.logWriter.LogWrite(string.Format("{3} Subject: {0} From :{1} Message Body {2}"
+                                        , message.Subject, message.From.Email, message.BodyText, inbox.MessageCount.ToString("00000")));
+                        if (message.From.Email == proSender)
                         {
-                            runAuto(message.Subject, 
-                                subjectPath[0].Trim(), 
-                                submissionPath[1].Trim(), 
-                                this.Configuration.Imap4UserName2, 
-                                this.Configuration.TransperfectEmail2, 
-                                this.Configuration.TransperfectPass2);
+                            string[] subjectPath = message.Subject.Split('|');
+                            if (subjectPath.Length >= 3)
+                            {
+                                if (subjectPath[2].Contains("Job Info to review"))
+                                {
+                                    // string submissionId
+                                    string[] submissionPath = subjectPath[1].Trim().Split(' ');
+                                    if (submissionPath.Length >= 2)
+                                    {
+                                        thisForm.runAuto(message.Subject,
+                                            subjectPath[0].Trim(),
+                                            submissionPath[1].Trim(),
+                                            thisForm.Configuration.Imap4UserName2,
+                                            thisForm.Configuration.TransperfectEmail2,
+                                            thisForm.Configuration.TransperfectPass2);
+                                    }
+                                }
+                            }
                         }
                     }
+                    else
+                    {
+                        thisForm.logWriter.LogWrite("NewMessageReceived2: There is no message in the imap4 account");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    thisForm.logWriter.LogWrite(ex.Message);
                 }
             }
-            // imap4.StopIdle();
         }
 
         private void runAuto(string subject, string endpoint, string submission, string imap4UserName, string transperfectEmail, string transperfectPass)
