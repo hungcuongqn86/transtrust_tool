@@ -448,6 +448,34 @@ namespace transtrusttool
                         }
                         waitLoading();
                     }
+
+                    // button -- Close
+                    System.Threading.Thread.Sleep(5000);
+                    ReadOnlyCollection<IWebElement> buttonClose1 = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+                    if (buttonClose1.Count > 0)
+                    {
+                        IWebElement abuttonClose1 = buttonClose1.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                        string tbuttonClose1 = abuttonClose1.TagName;
+                        if (tbuttonClose1 == "a")
+                        {
+                            abuttonClose1.Click();
+                        }
+                        waitLoading();
+                    }
+
+                    // button -- Close
+                    System.Threading.Thread.Sleep(5000);
+                    ReadOnlyCollection<IWebElement> buttonClose2 = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+                    if (buttonClose2.Count > 0)
+                    {
+                        IWebElement abuttonClose2 = buttonClose2.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                        string tbuttonClose2 = abuttonClose2.TagName;
+                        if (tbuttonClose2 == "a")
+                        {
+                            abuttonClose2.Click();
+                        }
+                        waitLoading();
+                    }
                 }
                 else
                 {
