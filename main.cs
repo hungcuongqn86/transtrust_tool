@@ -34,7 +34,7 @@ namespace transtrusttool
         string tdcAvaliableUrl = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
         string tptAvaliableUrl = "https://gl-tptprod1.transperfect.com/PD/#userMenuAVAILABLE_SUBMISSION";
         string avaliableUrl = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
-        public static string proSender = "hungcuongqn86@gmail.com";
+        public static string proSender = "noreply@translations.com";
 
         private SamplesConfiguration _configuration;
         public main()
@@ -329,6 +329,7 @@ namespace transtrusttool
                 {
                     eEmails.First().Clear(); ;
                     eEmails.First().SendKeys(email);
+                    System.Threading.Thread.Sleep(2000);
                 }
 
                 // SendKeys password /Password
@@ -345,11 +346,12 @@ namespace transtrusttool
                         ePasswords = chromeDriver.FindElements(By.Id("Password"));
                     }
                 }
-
+                System.Threading.Thread.Sleep(2000);
                 if (ePasswords.Count > 0)
                 {
                     ePasswords.First().Clear(); ;
                     ePasswords.First().SendKeys(pass);
+                    System.Threading.Thread.Sleep(2000);
                 }
 
                 // SubmitLogin2
