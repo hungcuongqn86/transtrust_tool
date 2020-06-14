@@ -5,7 +5,6 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using System.Reflection;
-using ActiveUp.Net.Mail;
 
 namespace transtrusttool.Utils
 {

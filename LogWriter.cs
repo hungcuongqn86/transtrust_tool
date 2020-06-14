@@ -25,7 +25,7 @@ namespace transtrusttool
                     Log(logMessage, w);
                 }
             }
-            catch (Exception ex)
+            catch
             {
             }
         }
@@ -36,7 +36,7 @@ namespace transtrusttool
             {
                 txtWriter.WriteLine("{0} {1}: {2}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString(), logMessage);
             }
-            catch (Exception ex)
+            catch
             {
             }
         }

@@ -34,13 +34,15 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_stop1 = new System.Windows.Forms.Button();
+            this.account1TptRun = new System.Windows.Forms.Button();
             this.btnAuto1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btn_stop2 = new System.Windows.Forms.Button();
+            this.account2TptRun = new System.Windows.Forms.Button();
             this.btnAuto2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.account2_start_btn = new System.Windows.Forms.Button();
-            this.account1TptRun = new System.Windows.Forms.Button();
-            this.account2TptRun = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -48,13 +50,13 @@
             // 
             // account1_start_btn
             // 
-            this.account1_start_btn.Location = new System.Drawing.Point(223, 24);
+            this.account1_start_btn.Location = new System.Drawing.Point(373, 24);
             this.account1_start_btn.Name = "account1_start_btn";
             this.account1_start_btn.Size = new System.Drawing.Size(76, 26);
             this.account1_start_btn.TabIndex = 1;
             this.account1_start_btn.Text = "TDC - Run";
             this.account1_start_btn.UseVisualStyleBackColor = true;
-            this.account1_start_btn.Click += new System.EventHandler(this.account1_start_btn_Click);
+            this.account1_start_btn.Click += new System.EventHandler(this.Account1_start_btn_Click);
             // 
             // menuStrip1
             // 
@@ -63,7 +65,7 @@
             this.exitToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(419, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(573, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -72,14 +74,14 @@
             this.configToolStripMenuItem.Name = "configToolStripMenuItem";
             this.configToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.configToolStripMenuItem.Text = "Config";
-            this.configToolStripMenuItem.Click += new System.EventHandler(this.config_btn_Click);
+            this.configToolStripMenuItem.Click += new System.EventHandler(this.Config_btn_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -92,49 +94,91 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btn_stop1);
             this.groupBox1.Controls.Add(this.account1TptRun);
             this.groupBox1.Controls.Add(this.btnAuto1);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.account1_start_btn);
             this.groupBox1.Location = new System.Drawing.Point(12, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(395, 67);
+            this.groupBox1.Size = new System.Drawing.Size(549, 67);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Account 1";
             // 
+            // btn_stop1
+            // 
+            this.btn_stop1.Location = new System.Drawing.Point(279, 24);
+            this.btn_stop1.Name = "btn_stop1";
+            this.btn_stop1.Size = new System.Drawing.Size(65, 26);
+            this.btn_stop1.TabIndex = 6;
+            this.btn_stop1.Text = "Stop";
+            this.btn_stop1.UseVisualStyleBackColor = true;
+            this.btn_stop1.Click += new System.EventHandler(this.Btn_stop1_Click);
+            // 
+            // account1TptRun
+            // 
+            this.account1TptRun.Location = new System.Drawing.Point(455, 24);
+            this.account1TptRun.Name = "account1TptRun";
+            this.account1TptRun.Size = new System.Drawing.Size(76, 26);
+            this.account1TptRun.TabIndex = 5;
+            this.account1TptRun.Text = "TPT - Run";
+            this.account1TptRun.UseVisualStyleBackColor = true;
+            this.account1TptRun.Click += new System.EventHandler(this.Account1TptRun_Click);
+            // 
             // btnAuto1
             // 
-            this.btnAuto1.Location = new System.Drawing.Point(152, 24);
+            this.btnAuto1.Location = new System.Drawing.Point(208, 24);
             this.btnAuto1.Name = "btnAuto1";
             this.btnAuto1.Size = new System.Drawing.Size(65, 26);
             this.btnAuto1.TabIndex = 4;
             this.btnAuto1.Text = "Auto";
             this.btnAuto1.UseVisualStyleBackColor = true;
-            this.btnAuto1.Click += new System.EventHandler(this.btnAuto1_Click);
+            this.btnAuto1.Click += new System.EventHandler(this.BtnAuto1_Click);
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btn_stop2);
             this.groupBox2.Controls.Add(this.account2TptRun);
             this.groupBox2.Controls.Add(this.btnAuto2);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.account2_start_btn);
             this.groupBox2.Location = new System.Drawing.Point(12, 100);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(395, 67);
+            this.groupBox2.Size = new System.Drawing.Size(549, 67);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Account 2";
             // 
+            // btn_stop2
+            // 
+            this.btn_stop2.Location = new System.Drawing.Point(279, 25);
+            this.btn_stop2.Name = "btn_stop2";
+            this.btn_stop2.Size = new System.Drawing.Size(65, 26);
+            this.btn_stop2.TabIndex = 7;
+            this.btn_stop2.Text = "Stop";
+            this.btn_stop2.UseVisualStyleBackColor = true;
+            this.btn_stop2.Click += new System.EventHandler(this.Btn_stop2_Click);
+            // 
+            // account2TptRun
+            // 
+            this.account2TptRun.Location = new System.Drawing.Point(455, 24);
+            this.account2TptRun.Name = "account2TptRun";
+            this.account2TptRun.Size = new System.Drawing.Size(76, 26);
+            this.account2TptRun.TabIndex = 6;
+            this.account2TptRun.Text = "TPT - Run";
+            this.account2TptRun.UseVisualStyleBackColor = true;
+            this.account2TptRun.Click += new System.EventHandler(this.Account2TptRun_Click);
+            // 
             // btnAuto2
             // 
-            this.btnAuto2.Location = new System.Drawing.Point(152, 24);
+            this.btnAuto2.Location = new System.Drawing.Point(208, 24);
             this.btnAuto2.Name = "btnAuto2";
             this.btnAuto2.Size = new System.Drawing.Size(65, 26);
             this.btnAuto2.TabIndex = 5;
             this.btnAuto2.Text = "Auto";
             this.btnAuto2.UseVisualStyleBackColor = true;
-            this.btnAuto2.Click += new System.EventHandler(this.btnAuto2_Click);
+            this.btnAuto2.Click += new System.EventHandler(this.BtnAuto2_Click);
             // 
             // label2
             // 
@@ -147,39 +191,19 @@
             // 
             // account2_start_btn
             // 
-            this.account2_start_btn.Location = new System.Drawing.Point(223, 24);
+            this.account2_start_btn.Location = new System.Drawing.Point(373, 24);
             this.account2_start_btn.Name = "account2_start_btn";
             this.account2_start_btn.Size = new System.Drawing.Size(76, 26);
             this.account2_start_btn.TabIndex = 1;
             this.account2_start_btn.Text = "TDC - Run";
             this.account2_start_btn.UseVisualStyleBackColor = true;
-            this.account2_start_btn.Click += new System.EventHandler(this.account2_start_btn_Click);
-            // 
-            // account1TptRun
-            // 
-            this.account1TptRun.Location = new System.Drawing.Point(305, 24);
-            this.account1TptRun.Name = "account1TptRun";
-            this.account1TptRun.Size = new System.Drawing.Size(76, 26);
-            this.account1TptRun.TabIndex = 5;
-            this.account1TptRun.Text = "TPT - Run";
-            this.account1TptRun.UseVisualStyleBackColor = true;
-            this.account1TptRun.Click += new System.EventHandler(this.account1TptRun_Click);
-            // 
-            // account2TptRun
-            // 
-            this.account2TptRun.Location = new System.Drawing.Point(305, 24);
-            this.account2TptRun.Name = "account2TptRun";
-            this.account2TptRun.Size = new System.Drawing.Size(76, 26);
-            this.account2TptRun.TabIndex = 6;
-            this.account2TptRun.Text = "TPT - Run";
-            this.account2TptRun.UseVisualStyleBackColor = true;
-            this.account2TptRun.Click += new System.EventHandler(this.account2TptRun_Click);
+            this.account2_start_btn.Click += new System.EventHandler(this.Account2_start_btn_Click);
             // 
             // main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 193);
+            this.ClientSize = new System.Drawing.Size(573, 193);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
@@ -211,6 +235,8 @@
         private System.Windows.Forms.Button btnAuto2;
         private System.Windows.Forms.Button account1TptRun;
         private System.Windows.Forms.Button account2TptRun;
+        private System.Windows.Forms.Button btn_stop1;
+        private System.Windows.Forms.Button btn_stop2;
     }
 }
 
