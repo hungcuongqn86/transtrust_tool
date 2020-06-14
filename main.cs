@@ -80,6 +80,7 @@ namespace transtrusttool
                 }
                 catch
                 {
+                    logWriter.LogWrite("Error, Not login email!"); 
                     MessageBox.Show("Error, Not login email!");
                 }
             }
