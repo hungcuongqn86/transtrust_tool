@@ -19,7 +19,6 @@ namespace transtrusttool
         const SecureSocketOptions SslOptions = SecureSocketOptions.Auto;
         public IdleClient idleClient;
         public Task idleTask;
-        public static string proSender = "noreply@translations.com";
 
         private SamplesConfiguration _configuration;
         public main()
@@ -84,7 +83,13 @@ namespace transtrusttool
         {
             logWriter.LogWrite("btnAuto1_Click...");
             Loading(false);
-            this.idleClient = new IdleClient(this.Configuration.Imap4Server, 993, SslOptions, this.Configuration.Imap4UserName, this.Configuration.Imap4Password);
+            this.idleClient = new IdleClient(
+                this.Configuration.Imap4Server, 993, SslOptions, 
+                this.Configuration.Imap4UserName, 
+                this.Configuration.Imap4Password,
+                this.Configuration.TransperfectEmail,
+                this.Configuration.TransperfectPass
+                );
             this.idleTask = this.idleClient.RunAsync();
         }
 

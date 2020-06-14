@@ -14,7 +14,7 @@ namespace transtrusttool
     public class IdleClient : IDisposable
     {
 		public LogWriter logWriter;
-		readonly string host, username, password;
+		readonly string host, username, password, transperfectEmail, transperfectPass;
 		readonly SecureSocketOptions sslOptions;
 		readonly int port;
 		List<IMessageSummary> messages;
@@ -22,8 +22,10 @@ namespace transtrusttool
 		CancellationTokenSource done;
 		bool messagesArrived;
 		ImapClient client;
+		// string proSender = "noreply@translations.com";
+		string proSender = "hungcuongqn86@gmail.com";
 
-		public IdleClient(string host, int port, SecureSocketOptions sslOptions, string username, string password)
+		public IdleClient(string host, int port, SecureSocketOptions sslOptions, string username, string password, string transperfectEmail, string transperfectPass)
 		{
 			logWriter = new LogWriter("Start IdleClient ...");
 			this.client = new ImapClient(new ProtocolLogger(Console.OpenStandardError()));
@@ -32,6 +34,8 @@ namespace transtrusttool
 			this.sslOptions = sslOptions;
 			this.username = username;
 			this.password = password;
+			this.transperfectEmail = transperfectEmail;
+			this.transperfectPass = transperfectPass;
 			this.host = host;
 			this.port = port;
 		}
@@ -78,7 +82,38 @@ namespace transtrusttool
 			foreach (var message in fetched)
 			{
 				if (print)
+				{
 					this.logWriter.LogWrite(String.Format("{0}: new message: {1}", client.Inbox, message.Envelope.Subject));
+					// Run webdriver
+					foreach (var mailbox in message.Envelope.From.Mailboxes)
+					{
+						if (mailbox.Address == proSender)
+						{
+							string[] subjectPath = message.Envelope.Subject.Split('|');
+							if (subjectPath.Length >= 3)
+							{
+								if (subjectPath[2].Contains("Job Info to review"))
+								{
+									// string submissionId
+									string[] submissionPath = subjectPath[1].Trim().Split(' ');
+									if (submissionPath.Length >= 2)
+									{
+										using (var autoDriver = new AutoRun())
+										{
+											autoDriver.RunAuto(message.Envelope.Subject, 
+												subjectPath[0].Trim(), 
+												submissionPath[1].Trim(),
+												username,
+												transperfectEmail,
+												transperfectPass);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
 				messages.Add(message);
 			}
 		}
