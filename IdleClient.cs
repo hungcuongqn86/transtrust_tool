@@ -100,8 +100,7 @@ namespace transtrusttool
 									{
 										using (var autoDriver = new AutoRun())
 										{
-											autoDriver.RunAuto(message.Envelope.Subject, 
-												subjectPath[0].Trim(), 
+											autoDriver.RunAuto(subjectPath[0].Trim(), 
 												submissionPath[1].Trim(),
 												username,
 												transperfectEmail,

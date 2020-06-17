@@ -32,10 +32,10 @@ namespace transtrusttool
             }
         }
 
-        public void RunAuto(string subject, string endpoint, string submission, string imap4UserName, string transperfectEmail, string transperfectPass)
+        public void RunAuto(string endpoint, string submission, string imap4UserName, string transperfectEmail, string transperfectPass)
         {
-            string msg = "Email " + imap4UserName + ", Subject: " + subject;
-            logWriter.LogWrite(msg);
+            // string msg = "Email " + imap4UserName + ", Subject: " + subject;
+            // logWriter.LogWrite(msg);
             submissionId = submission;
             if (endpoint == "TDC-PD")
             {
@@ -79,7 +79,7 @@ namespace transtrusttool
                 chromeDriver.Navigate();
                 WaitLoading();
 
-                System.Threading.Thread.Sleep(5000);
+                System.Threading.Thread.Sleep(3000);
             }
             catch
             {
@@ -97,7 +97,7 @@ namespace transtrusttool
                 chromeDriver.Navigate();
                 WaitLoading();
 
-                System.Threading.Thread.Sleep(5000);
+                System.Threading.Thread.Sleep(3000);
             }
 
             // If nologin
@@ -110,7 +110,7 @@ namespace transtrusttool
                 {
                     eloginwithemailbutton.First().Click();
                     WaitLoading();
-                    System.Threading.Thread.Sleep(5000);
+                    System.Threading.Thread.Sleep(3000);
                     logWriter.LogWrite("login with email...");
                 }
             }
@@ -193,10 +193,16 @@ namespace transtrusttool
             }
             else
             {
-                xpath = "//div[text()='" + this.submissionId + "' and contains(@class, 'x-grid-cell-inner')]";
+                xpath = "//div[contains(text(),'" + this.submissionId + "') and contains(@class, 'x-grid-cell-inner')]";
             }
 
             ReadOnlyCollection<IWebElement> submission = chromeDriver.FindElements(By.XPath(xpath));
+            if (submission.Count == 0)
+            {
+                System.Threading.Thread.Sleep(5000);
+                submission = chromeDriver.FindElements(By.XPath(xpath));
+            }
+
             if (submission.Count > 0)
             {
                 submission.First().FindElement(By.XPath("..")).Click();
@@ -251,7 +257,7 @@ namespace transtrusttool
                     ReadOnlyCollection<IWebElement> buttonClose1 = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
                     if (buttonClose1.Count > 0)
                     {
-                        IWebElement abuttonClose1 = buttonClose1.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                        IWebElement abuttonClose1 = buttonClose1.Last().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
                         string tbuttonClose1 = abuttonClose1.TagName;
                         if (tbuttonClose1 == "a")
                         {
@@ -265,7 +271,7 @@ namespace transtrusttool
                     ReadOnlyCollection<IWebElement> buttonClose2 = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
                     if (buttonClose2.Count > 0)
                     {
-                        IWebElement abuttonClose2 = buttonClose2.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                        IWebElement abuttonClose2 = buttonClose2.Last().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
                         string tbuttonClose2 = abuttonClose2.TagName;
                         if (tbuttonClose2 == "a")
                         {
@@ -276,7 +282,7 @@ namespace transtrusttool
                 }
                 else
                 {
-                    logWriter.LogWrite("Not submission!");
+                    logWriter.LogWrite("Not show Job Info!");
                 }
             }
             else
