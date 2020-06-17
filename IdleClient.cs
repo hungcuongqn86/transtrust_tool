@@ -22,8 +22,8 @@ namespace transtrusttool
 		CancellationTokenSource done;
 		bool messagesArrived;
 		ImapClient client;
-		// string proSender = "noreply@translations.com";
-		string proSender = "hungcuongqn86@gmail.com";
+		string proSender = "noreply@translations.com";
+		// string proSender = "hungcuongqn86@gmail.com";
 
 		public IdleClient(string host, int port, SecureSocketOptions sslOptions, string username, string password, string transperfectEmail, string transperfectPass)
 		{
