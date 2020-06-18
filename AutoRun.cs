@@ -223,10 +223,10 @@ namespace transtrusttool
                     System.Threading.Thread.Sleep(5000);
 
                     // pdSubmissionBudgetJobInfoColumnRadioAccept
-                    ReadOnlyCollection<IWebElement> pdSubmissionBudgetJobInfoColumnRadioAccept = chromeDriver.FindElements(By.XPath("//td[contains(@class, 'pdSubmissionBudgetJobInfoColumnRadioAccept')]"));
+                    ReadOnlyCollection<IWebElement> pdSubmissionBudgetJobInfoColumnRadioAccept = chromeDriver.FindElements(By.XPath("//div[contains(@class, 'x-grid-radio-col')]"));
                     if (pdSubmissionBudgetJobInfoColumnRadioAccept.Count > 0)
                     {
-                        pdSubmissionBudgetJobInfoColumnRadioAccept.First().Click();
+                        pdSubmissionBudgetJobInfoColumnRadioAccept.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
                         WaitLoading();
                     }
 
@@ -252,33 +252,41 @@ namespace transtrusttool
                         WaitLoading();
                     }
 
-                    // button -- Close
-                    System.Threading.Thread.Sleep(5000);
-                    ReadOnlyCollection<IWebElement> buttonClose1 = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
-                    if (buttonClose1.Count > 0)
+                    try
                     {
-                        IWebElement abuttonClose1 = buttonClose1.Last().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
-                        string tbuttonClose1 = abuttonClose1.TagName;
-                        if (tbuttonClose1 == "a")
+                        // button -- Close
+                        System.Threading.Thread.Sleep(5000);
+                        ReadOnlyCollection<IWebElement> buttonClose1 = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+                        if (buttonClose1.Count > 0)
                         {
-                            abuttonClose1.Click();
+                            IWebElement abuttonClose1 = buttonClose1.Last().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                            string tbuttonClose1 = abuttonClose1.TagName;
+                            if (tbuttonClose1 == "a")
+                            {
+                                abuttonClose1.Click();
+                            }
+                            WaitLoading();
                         }
-                        WaitLoading();
                     }
+                    catch {}
 
-                    // button -- Close
-                    System.Threading.Thread.Sleep(5000);
-                    ReadOnlyCollection<IWebElement> buttonClose2 = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
-                    if (buttonClose2.Count > 0)
+                    try
                     {
-                        IWebElement abuttonClose2 = buttonClose2.Last().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
-                        string tbuttonClose2 = abuttonClose2.TagName;
-                        if (tbuttonClose2 == "a")
+                        // button -- Close
+                        System.Threading.Thread.Sleep(5000);
+                        ReadOnlyCollection<IWebElement> buttonClose2 = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+                        if (buttonClose2.Count > 0)
                         {
-                            abuttonClose2.Click();
+                            IWebElement abuttonClose2 = buttonClose2.Last().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                            string tbuttonClose2 = abuttonClose2.TagName;
+                            if (tbuttonClose2 == "a")
+                            {
+                                abuttonClose2.Click();
+                            }
+                            WaitLoading();
                         }
-                        WaitLoading();
                     }
+                    catch {}
                 }
                 else
                 {
