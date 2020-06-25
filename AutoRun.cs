@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using Keys = OpenQA.Selenium.Keys;
 
 namespace transtrusttool
 {
@@ -19,37 +21,11 @@ namespace transtrusttool
         public string tdcAvaliableUrl = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
         public string tptAvaliableUrl = "https://gl-tptprod1.transperfect.com/PD/#userMenuAVAILABLE_SUBMISSION";
         public string avaliableUrl = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
-        public AutoRun()
+        public bool working = false;
+        static System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
+        public AutoRun(string imap4UserName, string email, string pass)
         {
             logWriter = new LogWriter("AutoRun ...");
-        }
-
-        public void Dispose()
-        {
-            if (chromeDriver != null)
-            {
-                chromeDriver.Quit();
-            }
-        }
-
-        public void RunAuto(string endpoint, string submission, string imap4UserName, string transperfectEmail, string transperfectPass)
-        {
-            // string msg = "Email " + imap4UserName + ", Subject: " + subject;
-            // logWriter.LogWrite(msg);
-            submissionId = submission;
-            if (endpoint == "TDC-PD")
-            {
-                avaliableUrl = tdcAvaliableUrl;
-            }
-            if (endpoint == "TPT-PD")
-            {
-                avaliableUrl = tptAvaliableUrl;
-            }
-            Autoget(imap4UserName, transperfectEmail, transperfectPass);
-        }
-
-        public void Autoget(string imap4UserName, string email, string pass)
-        {
             string profilePath = "C:/profile";
             try
             {
@@ -64,42 +40,20 @@ namespace transtrusttool
                 return;
             }
 
-            try
+            ChromeOptions options = new ChromeOptions();
+            options.AddArgument("--user-data-dir=" + profilePath + "/" + imap4UserName);
+            options.AddArgument("profile-directory=" + imap4UserName);
+            options.AddArgument("disable-infobars");
+            options.AddArgument("--disable-extensions");
+            options.AddArgument("--start-maximized");
+            chromeDriver = new ChromeDriver(options)
             {
-                ChromeOptions options = new ChromeOptions();
-                options.AddArgument("--user-data-dir=" + profilePath + "/" + imap4UserName);
-                options.AddArgument("profile-directory=" + imap4UserName);
-                options.AddArgument("disable-infobars");
-                options.AddArgument("--disable-extensions");
-                options.AddArgument("--start-maximized");
-                chromeDriver = new ChromeDriver(options)
-                {
-                    Url = avaliableUrl
-                };
-                chromeDriver.Navigate();
-                WaitLoading();
+                Url = tdcAvaliableUrl
+            };
+            chromeDriver.Navigate();
+            WaitLoading();
 
-                System.Threading.Thread.Sleep(3000);
-            }
-            catch
-            {
-                logWriter.LogWrite("Error, Could not open profiles!");
-                logWriter.LogWrite("------------------------------------------------");
-                logWriter.LogWrite("Run app without a profile");
-                ChromeOptions options = new ChromeOptions();
-                options.AddArgument("disable-infobars");
-                options.AddArgument("--disable-extensions");
-                options.AddArgument("--start-maximized");
-                chromeDriver = new ChromeDriver(options)
-                {
-                    Url = avaliableUrl
-                };
-                chromeDriver.Navigate();
-                WaitLoading();
-
-                System.Threading.Thread.Sleep(3000);
-            }
-
+            System.Threading.Thread.Sleep(3000);
             // If nologin
             string url = chromeDriver.Url;
             if (url.Contains("gl-tdcprod1.translations.com/PD/login") || url.Contains("gl-tptprod1.transperfect.com/PD/login"))
@@ -167,6 +121,7 @@ namespace transtrusttool
             {
                 logWriter.LogWrite("Login fall!");
                 chromeDriver.Quit();
+                MessageBox.Show("Login fall!", "Login...", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -184,6 +139,70 @@ namespace transtrusttool
                 WaitLoading();
             }
 
+            myTimer.Tick += new EventHandler(TimerEventProcessor);
+            myTimer.Interval = 600000;
+            myTimer.Start();
+
+            // Runs the timer, and raises the event.
+            while (working == false)
+            {
+                // Processes all the events in the queue.
+                Application.DoEvents();
+            }
+        }
+
+        private void TimerEventProcessor(Object myObject,
+                                        EventArgs myEventArgs)
+        {
+            if (working == false)
+            {
+                chromeDriver.Navigate().Refresh();
+            }
+        }
+
+        public void Dispose()
+        {
+            if (chromeDriver != null)
+            {
+                chromeDriver.Quit();
+            }
+        }
+
+        public void RunAuto(string endpoint, string submission)
+        {
+            working = true;
+            // string msg = "Email " + imap4UserName + ", Subject: " + subject;
+            // logWriter.LogWrite(msg);
+            submissionId = submission;
+            if (endpoint == "TDC-PD")
+            {
+                avaliableUrl = tdcAvaliableUrl;
+            }
+            if (endpoint == "TPT-PD")
+            {
+                avaliableUrl = tptAvaliableUrl;
+            }
+
+            // Open newtab
+            ReadOnlyCollection<IWebElement> availableTab = chromeDriver.FindElements(By.XPath("//a[contains(@href, 'translations.com')]"));
+            if (availableTab.Count > 0)
+            {
+                IWebElement availableLink = availableTab.First();
+                String selectLinkOpeninNewTab = Keys.Control + Keys.Return;
+                availableLink.SendKeys(selectLinkOpeninNewTab);
+                WaitLoading();
+                chromeDriver.SwitchTo().Window(chromeDriver.WindowHandles.Last());
+                chromeDriver.Navigate().GoToUrl(avaliableUrl);
+                WaitLoading();
+                // chromeDriver.SwitchTo().Window(chromeDriver.WindowHandles.First());
+                Autoget();
+                chromeDriver.Close();
+            }
+            working = false;
+        }
+
+        public void Autoget()
+        {
             //select submission
             System.Threading.Thread.Sleep(3000);
             string xpath;
@@ -299,7 +318,6 @@ namespace transtrusttool
             }
 
             System.Threading.Thread.Sleep(5000);
-            chromeDriver.Quit();
             logWriter.LogWrite("Done!");
         }
 

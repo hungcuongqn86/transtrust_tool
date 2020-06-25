@@ -119,12 +119,12 @@ namespace transtrusttool
             Loading(false);
             logWriter.LogWrite("------------------------------------------------");
             logWriter.LogWrite("account1_start_btn_Click");
-            using (var autoDriver = new AutoRun())
+            /*using (var autoDriver = new AutoRun())
             {
                 autoDriver.submissionId = "0623307";
                 autoDriver.avaliableUrl = autoDriver.tdcAvaliableUrl;
                 autoDriver.Autoget(this.Configuration.Imap4UserName, this.Configuration.TransperfectEmail, this.Configuration.TransperfectPass);
-            }
+            }*/
             Loading(true);
         }
 
@@ -133,12 +133,12 @@ namespace transtrusttool
             Loading(false);
             logWriter.LogWrite("------------------------------------------------");
             logWriter.LogWrite("account1_start_btn_Click");
-            using (var autoDriver = new AutoRun())
+            /*using (var autoDriver = new AutoRun())
             {
                 // autoDriver.submissionId = "0614938";
                 autoDriver.avaliableUrl = autoDriver.tdcAvaliableUrl;
                 autoDriver.Autoget(this.Configuration.Imap4UserName2, this.Configuration.TransperfectEmail2, this.Configuration.TransperfectPass2);
-            }
+            }*/
             Loading(true);
         }
 
@@ -147,12 +147,12 @@ namespace transtrusttool
             Loading(false);
             logWriter.LogWrite("------------------------------------------------");
             logWriter.LogWrite("account1TptRun_Click");
-            using (var autoDriver = new AutoRun())
+            /*using (var autoDriver = new AutoRun())
             {
                 // autoDriver.submissionId = "0614938";
                 autoDriver.avaliableUrl = autoDriver.tptAvaliableUrl;
                 autoDriver.Autoget(this.Configuration.Imap4UserName, this.Configuration.TransperfectEmail, this.Configuration.TransperfectPass);
-            }
+            }*/
             Loading(true);
         }
 
@@ -161,12 +161,12 @@ namespace transtrusttool
             Loading(false);
             logWriter.LogWrite("------------------------------------------------");
             logWriter.LogWrite("account2TptRun_Click");
-            using (var autoDriver = new AutoRun())
+            /*using (var autoDriver = new AutoRun())
             {
                 // autoDriver.submissionId = "0614938";
                 autoDriver.avaliableUrl = autoDriver.tptAvaliableUrl;
                 autoDriver.Autoget(this.Configuration.Imap4UserName2, this.Configuration.TransperfectEmail2, this.Configuration.TransperfectPass2);
-            }
+            }*/
             Loading(true);
         }
 

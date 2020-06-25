@@ -14,6 +14,7 @@ namespace transtrusttool
     public class IdleClient : IDisposable
     {
 		public LogWriter logWriter;
+		public AutoRun autoRun;
 		readonly string host, username, password, transperfectEmail, transperfectPass;
 		readonly SecureSocketOptions sslOptions;
 		readonly int port;
@@ -28,9 +29,9 @@ namespace transtrusttool
 		public IdleClient(string host, int port, SecureSocketOptions sslOptions, string username, string password, string transperfectEmail, string transperfectPass)
 		{
 			logWriter = new LogWriter("Start IdleClient ...");
-			this.client = new ImapClient(new ProtocolLogger(Console.OpenStandardError()));
-			this.messages = new List<IMessageSummary>();
-			this.cancel = new CancellationTokenSource();
+			client = new ImapClient(new ProtocolLogger(Console.OpenStandardError()));
+			messages = new List<IMessageSummary>();
+			cancel = new CancellationTokenSource();
 			this.sslOptions = sslOptions;
 			this.username = username;
 			this.password = password;
@@ -38,6 +39,8 @@ namespace transtrusttool
 			this.transperfectPass = transperfectPass;
 			this.host = host;
 			this.port = port;
+
+			autoRun = new AutoRun(this.username, this.transperfectEmail, this.transperfectPass);
 		}
 
 		async Task ReconnectAsync()
@@ -98,14 +101,7 @@ namespace transtrusttool
 									string[] submissionPath = subjectPath[1].Trim().Split(' ');
 									if (submissionPath.Length >= 2)
 									{
-										using (var autoDriver = new AutoRun())
-										{
-											autoDriver.RunAuto(subjectPath[0].Trim(), 
-												submissionPath[1].Trim(),
-												username,
-												transperfectEmail,
-												transperfectPass);
-										}
+										autoRun.RunAuto(subjectPath[0].Trim(), submissionPath[1].Trim());
 									}
 								}
 							}
