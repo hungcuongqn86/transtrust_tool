@@ -15,43 +15,31 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_11F02EBB014F80DBE162978024BF5215"
-        "OwnerKey" = "8:_B66E362A2FC74D2FB3FC866C4E198B15"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4B7AF3D3118F420F9BD5AF5558310D2B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_65D531148C1D4DA2BFE2987DC3E5D1CA"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_85D64607B8CDC76EB228281C1C3698DB"
-        "OwnerKey" = "8:_E317305E1ED26F71333068BAD5AF11A6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_85D64607B8CDC76EB228281C1C3698DB"
+        "MsmKey" = "8:_8AD6926B1606F0C9994084FA01E86437"
         "OwnerKey" = "8:_B66E362A2FC74D2FB3FC866C4E198B15"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_85D64607B8CDC76EB228281C1C3698DB"
-        "OwnerKey" = "8:_9E46AF8B9C06DD987B0796FE677BF7C6"
+        "MsmKey" = "8:_9049AF144AD823009DD21816036E7B08"
+        "OwnerKey" = "8:_A29DFC92B03A85B5FAA74EBC60859FD5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9E46AF8B9C06DD987B0796FE677BF7C6"
+        "MsmKey" = "8:_9049AF144AD823009DD21816036E7B08"
+        "OwnerKey" = "8:_B66E362A2FC74D2FB3FC866C4E198B15"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A29DFC92B03A85B5FAA74EBC60859FD5"
         "OwnerKey" = "8:_B66E362A2FC74D2FB3FC866C4E198B15"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -64,7 +52,13 @@
         "Entry"
         {
         "MsmKey" = "8:_C20B5B02C93B2102DCA5DFA57FE833A6"
-        "OwnerKey" = "8:_E317305E1ED26F71333068BAD5AF11A6"
+        "OwnerKey" = "8:_9049AF144AD823009DD21816036E7B08"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DBB4F0AE3D8E49AB8F844D0A595F3A11"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -75,56 +69,62 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E317305E1ED26F71333068BAD5AF11A6"
-        "OwnerKey" = "8:_9E46AF8B9C06DD987B0796FE677BF7C6"
+        "MsmKey" = "8:_F91B7723C9FE72585745ACA9B964908A"
+        "OwnerKey" = "8:_9049AF144AD823009DD21816036E7B08"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E317305E1ED26F71333068BAD5AF11A6"
+        "MsmKey" = "8:_F91B7723C9FE72585745ACA9B964908A"
+        "OwnerKey" = "8:_B66E362A2FC74D2FB3FC866C4E198B15"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F91B7723C9FE72585745ACA9B964908A"
+        "OwnerKey" = "8:_A29DFC92B03A85B5FAA74EBC60859FD5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B66E362A2FC74D2FB3FC866C4E198B15"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DF86C83C66F9519611E04B310C5F330E"
+        "OwnerKey" = "8:_8AD6926B1606F0C9994084FA01E86437"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B66E362A2FC74D2FB3FC866C4E198B15"
+        "OwnerKey" = "8:_A29DFC92B03A85B5FAA74EBC60859FD5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_11F02EBB014F80DBE162978024BF5215"
+        "OwnerKey" = "8:_9049AF144AD823009DD21816036E7B08"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9E46AF8B9C06DD987B0796FE677BF7C6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E317305E1ED26F71333068BAD5AF11A6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_85D64607B8CDC76EB228281C1C3698DB"
+        "OwnerKey" = "8:_F91B7723C9FE72585745ACA9B964908A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_C20B5B02C93B2102DCA5DFA57FE833A6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DF86C83C66F9519611E04B310C5F330E"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -184,6 +184,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -214,14 +222,34 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_11F02EBB014F80DBE162978024BF5215"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4B7AF3D3118F420F9BD5AF5558310D2B"
+            {
+            "SourcePath" = "8:..\\bin\\Debug\\chromedriver.exe"
+            "TargetName" = "8:chromedriver.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_43B6A7C542BA422F87B19BFD8CEEA856"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8AD6926B1606F0C9994084FA01E86437"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_11F02EBB014F80DBE162978024BF5215"
+                    "_8AD6926B1606F0C9994084FA01E86437"
                     {
                     "Name" = "8:WebDriver.dll"
                     "Attributes" = "3:512"
@@ -245,60 +273,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4B7AF3D3118F420F9BD5AF5558310D2B"
-            {
-            "SourcePath" = "8:..\\bin\\Debug\\chromedriver.exe"
-            "TargetName" = "8:chromedriver.exe"
-            "Tag" = "8:"
-            "Folder" = "8:_43B6A7C542BA422F87B19BFD8CEEA856"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_65D531148C1D4DA2BFE2987DC3E5D1CA"
-            {
-            "SourcePath" = "8:C:\\Users\\hungc\\Downloads\\Cjdowner-Cryptocurrency-ICON.ico"
-            "TargetName" = "8:Cjdowner-Cryptocurrency-ICON.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_43B6A7C542BA422F87B19BFD8CEEA856"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_85D64607B8CDC76EB228281C1C3698DB"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9049AF144AD823009DD21816036E7B08"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:MimeKit, Version=2.8.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_85D64607B8CDC76EB228281C1C3698DB"
+                    "_9049AF144AD823009DD21816036E7B08"
                     {
-                    "Name" = "8:BouncyCastle.Crypto.dll"
+                    "Name" = "8:MimeKit.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:BouncyCastle.Crypto.dll"
+            "SourcePath" = "8:MimeKit.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_43B6A7C542BA422F87B19BFD8CEEA856"
@@ -316,14 +304,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9E46AF8B9C06DD987B0796FE677BF7C6"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A29DFC92B03A85B5FAA74EBC60859FD5"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:MailKit, Version=2.7.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_9E46AF8B9C06DD987B0796FE677BF7C6"
+                    "_A29DFC92B03A85B5FAA74EBC60859FD5"
                     {
                     "Name" = "8:MailKit.dll"
                     "Attributes" = "3:512"
@@ -378,6 +366,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DBB4F0AE3D8E49AB8F844D0A595F3A11"
+            {
+            "SourcePath" = "8:..\\ico\\Cjdowner-Cryptocurrency-ICON.ico"
+            "TargetName" = "8:Cjdowner-Cryptocurrency-ICON.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_43B6A7C542BA422F87B19BFD8CEEA856"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DF86C83C66F9519611E04B310C5F330E"
             {
             "AssemblyRegister" = "3:1"
@@ -409,20 +417,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E317305E1ED26F71333068BAD5AF11A6"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F91B7723C9FE72585745ACA9B964908A"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MimeKit, Version=2.8.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E317305E1ED26F71333068BAD5AF11A6"
+                    "_F91B7723C9FE72585745ACA9B964908A"
                     {
-                    "Name" = "8:MimeKit.dll"
+                    "Name" = "8:BouncyCastle.Crypto.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:MimeKit.dll"
+            "SourcePath" = "8:BouncyCastle.Crypto.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_43B6A7C542BA422F87B19BFD8CEEA856"
@@ -628,7 +636,7 @@
             "Target" = "8:_B66E362A2FC74D2FB3FC866C4E198B15"
             "Folder" = "8:_5EB47D3042E749DF9FB6F08BE45E3F92"
             "WorkingFolder" = "8:_43B6A7C542BA422F87B19BFD8CEEA856"
-            "Icon" = "8:_65D531148C1D4DA2BFE2987DC3E5D1CA"
+            "Icon" = "8:_DBB4F0AE3D8E49AB8F844D0A595F3A11"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_5FDDF9D9B2D34A4185C9341E817F75CE"
@@ -642,7 +650,7 @@
             "Target" = "8:_B66E362A2FC74D2FB3FC866C4E198B15"
             "Folder" = "8:_76D0D1A0BF1843C4AFE056697A90BF54"
             "WorkingFolder" = "8:_43B6A7C542BA422F87B19BFD8CEEA856"
-            "Icon" = "8:_65D531148C1D4DA2BFE2987DC3E5D1CA"
+            "Icon" = "8:_DBB4F0AE3D8E49AB8F844D0A595F3A11"
             "Feature" = "8:"
             }
         }
