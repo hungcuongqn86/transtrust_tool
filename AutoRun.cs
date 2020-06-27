@@ -142,13 +142,6 @@ namespace transtrusttool
             myTimer.Tick += new EventHandler(TimerEventProcessor);
             myTimer.Interval = 600000;
             myTimer.Start();
-
-            // Runs the timer, and raises the event.
-            while (working == false)
-            {
-                // Processes all the events in the queue.
-                Application.DoEvents();
-            }
         }
 
         private void TimerEventProcessor(Object myObject,
