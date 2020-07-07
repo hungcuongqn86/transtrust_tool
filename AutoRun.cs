@@ -22,9 +22,14 @@ namespace transtrusttool
         public string tptAvaliableUrl = "https://gl-tptprod1.transperfect.com/PD/#userMenuAVAILABLE_SUBMISSION";
         public string avaliableUrl = "https://gl-tdcprod1.translations.com/PD/#userMenuAVAILABLE_SUBMISSION";
         public bool working = false;
+        public string email;
+        public string pass;
         static System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
         public AutoRun(string imap4UserName, string email, string pass)
         {
+            this.email = email;
+            this.pass = pass;
+
             logWriter = new LogWriter("AutoRun ...");
             string profilePath = "C:/profile";
             try
@@ -53,7 +58,42 @@ namespace transtrusttool
             chromeDriver.Navigate();
             WaitLoading();
 
-            System.Threading.Thread.Sleep(3000);
+            login();
+
+            myTimer.Tick += new EventHandler(TimerEventProcessor);
+            myTimer.Interval = 600000;
+            myTimer.Start();
+        }
+
+        private void TimerEventProcessor(Object myObject,
+                                        EventArgs myEventArgs)
+        {
+            if (working == false)
+            {
+                chromeDriver.Navigate().Refresh();
+                // if end session
+                System.Threading.Thread.Sleep(5000);
+                ReadOnlyCollection<IWebElement> msgErrorBox = chromeDriver.FindElements(By.Id("errorMessage-title"));
+                if (msgErrorBox.Count > 0)
+                {
+                    ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.Id("errorMessage-closeButton"));
+                    if (buttonClose.Count > 0)
+                    {
+                        string tbuttonClose = buttonClose.First().TagName;
+                        if (tbuttonClose == "button")
+                        {
+                            buttonClose.First().Click();
+                        }
+                        WaitLoading();
+                        login();
+                    }
+                }
+            }
+        }
+
+        private void login()
+        {
+            System.Threading.Thread.Sleep(5000);
             // If nologin
             string url = chromeDriver.Url;
             if (url.Contains("gl-tdcprod1.translations.com/PD/login") || url.Contains("gl-tptprod1.transperfect.com/PD/login"))
@@ -137,19 +177,6 @@ namespace transtrusttool
                     abuttonClose.Click();
                 }
                 WaitLoading();
-            }
-
-            myTimer.Tick += new EventHandler(TimerEventProcessor);
-            myTimer.Interval = 600000;
-            myTimer.Start();
-        }
-
-        private void TimerEventProcessor(Object myObject,
-                                        EventArgs myEventArgs)
-        {
-            if (working == false)
-            {
-                chromeDriver.Navigate().Refresh();
             }
         }
 

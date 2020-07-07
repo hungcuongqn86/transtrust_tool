@@ -36,13 +36,13 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btn_stop1 = new System.Windows.Forms.Button();
             this.account1TptRun = new System.Windows.Forms.Button();
+            this.btnAuto1 = new System.Windows.Forms.Button();
             this.account2_start_btn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.account2TptRun = new System.Windows.Forms.Button();
             this.btn_stop2 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnAuto2 = new System.Windows.Forms.Button();
-            this.btnAuto1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -66,7 +66,7 @@
             this.exitToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(290, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(577, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -128,6 +128,16 @@
             this.account1TptRun.UseVisualStyleBackColor = true;
             this.account1TptRun.Visible = false;
             this.account1TptRun.Click += new System.EventHandler(this.Account1TptRun_Click);
+            // 
+            // btnAuto1
+            // 
+            this.btnAuto1.Location = new System.Drawing.Point(191, 24);
+            this.btnAuto1.Name = "btnAuto1";
+            this.btnAuto1.Size = new System.Drawing.Size(65, 26);
+            this.btnAuto1.TabIndex = 4;
+            this.btnAuto1.Text = "Auto";
+            this.btnAuto1.UseVisualStyleBackColor = true;
+            this.btnAuto1.Click += new System.EventHandler(this.BtnAuto1_Click);
             // 
             // account2_start_btn
             // 
@@ -195,21 +205,11 @@
             this.btnAuto2.UseVisualStyleBackColor = true;
             this.btnAuto2.Click += new System.EventHandler(this.BtnAuto2_Click);
             // 
-            // btnAuto1
-            // 
-            this.btnAuto1.Location = new System.Drawing.Point(191, 24);
-            this.btnAuto1.Name = "btnAuto1";
-            this.btnAuto1.Size = new System.Drawing.Size(65, 26);
-            this.btnAuto1.TabIndex = 4;
-            this.btnAuto1.Text = "Auto";
-            this.btnAuto1.UseVisualStyleBackColor = true;
-            this.btnAuto1.Click += new System.EventHandler(this.BtnAuto1_Click);
-            // 
             // main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(290, 193);
+            this.ClientSize = new System.Drawing.Size(577, 193);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
