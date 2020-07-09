@@ -88,6 +88,23 @@ namespace transtrusttool
                         login();
                     }
                 }
+
+                ReadOnlyCollection<IWebElement> sessionTerminatedErrorBox = chromeDriver.FindElements(By.XPath("//div[text()='Session terminated' and contains(@id, 'innerCt')]"));
+                if (sessionTerminatedErrorBox.Count > 0)
+                {
+                    ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+                    if (buttonClose.Count > 0)
+                    {
+                        IWebElement abuttonClose = buttonClose.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                        string tbuttonClose = abuttonClose.TagName;
+                        if (tbuttonClose == "a")
+                        {
+                            abuttonClose.Click();
+                        }
+                        WaitLoading();
+                        login();
+                    }
+                }
             }
         }
 
