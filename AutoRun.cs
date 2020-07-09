@@ -240,8 +240,21 @@ namespace transtrusttool
 
         public void Autoget()
         {
+            System.Threading.Thread.Sleep(5000);
+            ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+            if (buttonClose.Count > 0)
+            {
+                IWebElement abuttonClose = buttonClose.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                string tbuttonClose = abuttonClose.TagName;
+                if (tbuttonClose == "a")
+                {
+                    abuttonClose.Click();
+                }
+                WaitLoading();
+                login();
+            }
+
             //select submission
-            System.Threading.Thread.Sleep(3000);
             string xpath;
             if (String.IsNullOrEmpty(this.submissionId))
             {
