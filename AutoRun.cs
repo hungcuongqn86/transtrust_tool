@@ -61,7 +61,7 @@ namespace transtrusttool
             login();
 
             myTimer.Tick += new EventHandler(TimerEventProcessor);
-            myTimer.Interval = 600000;
+            myTimer.Interval = 300000;
             myTimer.Start();
         }
 
@@ -209,7 +209,7 @@ namespace transtrusttool
         {
             working = true;
             // string msg = "Email " + imap4UserName + ", Subject: " + subject;
-            // logWriter.LogWrite(msg);
+            this.logWriter.LogWrite(String.Format("RunAuto: {0} - {1}", endpoint, submission));
             submissionId = submission;
             if (endpoint == "TDC-PD")
             {
@@ -221,6 +221,8 @@ namespace transtrusttool
             }
 
             // Open newtab
+            chromeDriver.SwitchTo().Window(chromeDriver.WindowHandles.First());
+            System.Threading.Thread.Sleep(1000);
             ReadOnlyCollection<IWebElement> availableTab = chromeDriver.FindElements(By.XPath("//a[contains(@href, 'translations.com')]"));
             if (availableTab.Count > 0)
             {
@@ -231,10 +233,10 @@ namespace transtrusttool
                 chromeDriver.SwitchTo().Window(chromeDriver.WindowHandles.Last());
                 chromeDriver.Navigate().GoToUrl(avaliableUrl);
                 WaitLoading();
-                // chromeDriver.SwitchTo().Window(chromeDriver.WindowHandles.First());
                 Autoget();
                 chromeDriver.Close();
             }
+            chromeDriver.SwitchTo().Window(chromeDriver.WindowHandles.First());
             working = false;
         }
 

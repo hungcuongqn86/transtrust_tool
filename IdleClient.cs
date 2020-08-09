@@ -84,6 +84,7 @@ namespace transtrusttool
 
 			foreach (var message in fetched)
 			{
+				// this.logWriter.LogWrite(String.Format("print: {0}", print));
 				if (print)
 				{
 					this.logWriter.LogWrite(String.Format("{0}: new message: {1}", client.Inbox, message.Envelope.Subject));
@@ -101,7 +102,10 @@ namespace transtrusttool
 									string[] submissionPath = subjectPath[1].Trim().Split(' ');
 									if (submissionPath.Length >= 2)
 									{
-										autoRun.RunAuto(subjectPath[0].Trim(), submissionPath[1].Trim());
+										if (!autoRun.working)
+										{
+											autoRun.RunAuto(subjectPath[0].Trim(), submissionPath[1].Trim());
+										}
 									}
 								}
 							}
