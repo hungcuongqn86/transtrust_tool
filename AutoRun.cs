@@ -105,6 +105,13 @@ namespace transtrusttool
                         login();
                     }
                 }
+
+                // If logout
+                ReadOnlyCollection<IWebElement> loginForm = chromeDriver.FindElements(By.Id("loginForm"));
+                if (loginForm.Count > 0)
+                {
+                    login();
+                }
             }
         }
 
