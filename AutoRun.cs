@@ -190,7 +190,7 @@ namespace transtrusttool
             }
 
             // button-1217 -- Close
-            System.Threading.Thread.Sleep(5000);
+            WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
             ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
             if (buttonClose.Count > 0)
             {
@@ -378,6 +378,37 @@ namespace transtrusttool
 
             System.Threading.Thread.Sleep(5000);
             logWriter.LogWrite("Done!");
+        }
+
+        private void WaitAjaxLoading(By byFinter)
+        {
+            // wait loading
+            WebDriverWait wait = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(30));
+            Func<IWebDriver, bool> waitLoading = new Func<IWebDriver, bool>((IWebDriver Web) =>
+            {
+                try
+                {
+                    ReadOnlyCollection<IWebElement> alertE = Web.FindElements(byFinter);
+                    if (alertE.Count > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+            });
+
+            try
+            {
+                wait.Until(waitLoading);
+            }
+            catch { }
         }
 
         private void WaitLoading()
