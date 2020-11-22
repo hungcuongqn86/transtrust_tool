@@ -25,6 +25,8 @@ namespace transtrusttool
         public string email;
         public string pass;
         static System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
+        private bool popup = false;
+
         public AutoRun(string imap4UserName, string email, string pass)
         {
             this.email = email;
@@ -60,8 +62,24 @@ namespace transtrusttool
 
             login();
 
+            // button-1217 -- Close
+            WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+            WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+            ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+            if (buttonClose.Count > 0)
+            {
+                popup = true;
+                IWebElement abuttonClose = buttonClose.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                string tbuttonClose = abuttonClose.TagName;
+                if (tbuttonClose == "a")
+                {
+                    abuttonClose.Click();
+                }
+                WaitLoading();
+            }
+
             myTimer.Tick += new EventHandler(TimerEventProcessor);
-            myTimer.Interval = 300000;
+            myTimer.Interval = 180000;
             myTimer.Start();
         }
 
@@ -71,8 +89,8 @@ namespace transtrusttool
             if (working == false)
             {
                 chromeDriver.Navigate().Refresh();
-                // if end session
-                System.Threading.Thread.Sleep(5000);
+
+                WaitAjaxLoading(By.Id("errorMessage-title"));
                 ReadOnlyCollection<IWebElement> msgErrorBox = chromeDriver.FindElements(By.Id("errorMessage-title"));
                 if (msgErrorBox.Count > 0)
                 {
@@ -112,12 +130,28 @@ namespace transtrusttool
                 {
                     login();
                 }
+
+                // button-1217 -- Close
+                popup = false;
+                WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+                ReadOnlyCollection<IWebElement> buttonClosepp = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+                if (buttonClosepp.Count > 0)
+                {
+                    popup = true;
+                    IWebElement abuttonClose = buttonClosepp.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                    string tbuttonClose = abuttonClose.TagName;
+                    if (tbuttonClose == "a")
+                    {
+                        abuttonClose.Click();
+                    }
+                    WaitLoading();
+                }
             }
         }
 
         private void login()
         {
-            System.Threading.Thread.Sleep(5000);
+            // System.Threading.Thread.Sleep(5000);
             // If nologin
             string url = chromeDriver.Url;
             if (url.Contains("gl-tdcprod1.translations.com/PD/login") || url.Contains("gl-tptprod1.transperfect.com/PD/login"))
@@ -128,7 +162,7 @@ namespace transtrusttool
                 {
                     eloginwithemailbutton.First().Click();
                     WaitLoading();
-                    System.Threading.Thread.Sleep(3000);
+                    System.Threading.Thread.Sleep(1000);
                     logWriter.LogWrite("login with email...");
                 }
             }
@@ -142,7 +176,7 @@ namespace transtrusttool
                 {
                     eEmails.First().Clear(); ;
                     eEmails.First().SendKeys(email);
-                    System.Threading.Thread.Sleep(2000);
+                    System.Threading.Thread.Sleep(1000);
                 }
 
                 // SendKeys password /Password
@@ -155,26 +189,26 @@ namespace transtrusttool
                     {
                         SubmitLogin.First().Click();
                         WaitLoading();
-                        System.Threading.Thread.Sleep(2000);
+                        System.Threading.Thread.Sleep(1000);
                         ePasswords = chromeDriver.FindElements(By.Id("Password"));
                     }
                 }
-                System.Threading.Thread.Sleep(2000);
+                System.Threading.Thread.Sleep(1000);
                 if (ePasswords.Count > 0)
                 {
                     ePasswords.First().Clear(); ;
                     ePasswords.First().SendKeys(pass);
-                    System.Threading.Thread.Sleep(2000);
+                    System.Threading.Thread.Sleep(1000);
                 }
 
                 // SubmitLogin2
-                System.Threading.Thread.Sleep(2000);
+                System.Threading.Thread.Sleep(1000);
                 ReadOnlyCollection<IWebElement> SubmitLogin2 = chromeDriver.FindElements(By.Id("SubmitLogin"));
                 if (SubmitLogin2.Count > 0)
                 {
                     SubmitLogin2.First().Click();
                     WaitLoading();
-                    System.Threading.Thread.Sleep(2000);
+                    System.Threading.Thread.Sleep(1000);
                 }
 
                 logWriter.LogWrite("login...");
@@ -189,18 +223,23 @@ namespace transtrusttool
                 return;
             }
 
-            // button-1217 -- Close
-            WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
-            ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
-            if (buttonClose.Count > 0)
+            //-- Close
+            if (popup)
             {
-                IWebElement abuttonClose = buttonClose.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
-                string tbuttonClose = abuttonClose.TagName;
-                if (tbuttonClose == "a")
+                WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+                ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+                if (buttonClose.Count > 0)
                 {
-                    abuttonClose.Click();
+                    popup = true;
+                    IWebElement abuttonClose = buttonClose.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                    string tbuttonClose = abuttonClose.TagName;
+                    if (tbuttonClose == "a")
+                    {
+                        abuttonClose.Click();
+                    }
+                    logWriter.LogWrite("Check login - Close popup ...");
+                    WaitLoading();
                 }
-                WaitLoading();
             }
         }
 
@@ -249,19 +288,7 @@ namespace transtrusttool
 
         public void Autoget()
         {
-            System.Threading.Thread.Sleep(5000);
-            ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
-            if (buttonClose.Count > 0)
-            {
-                IWebElement abuttonClose = buttonClose.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
-                string tbuttonClose = abuttonClose.TagName;
-                if (tbuttonClose == "a")
-                {
-                    abuttonClose.Click();
-                }
-                WaitLoading();
-                login();
-            }
+            login();
 
             //select submission
             string xpath;
@@ -274,12 +301,9 @@ namespace transtrusttool
                 xpath = "//div[contains(text(),'" + this.submissionId + "') and contains(@class, 'x-grid-cell-inner')]";
             }
 
+            WaitAjaxLoading(By.XPath(xpath));
+            WaitAjaxLoading(By.XPath(xpath));
             ReadOnlyCollection<IWebElement> submission = chromeDriver.FindElements(By.XPath(xpath));
-            if (submission.Count == 0)
-            {
-                System.Threading.Thread.Sleep(5000);
-                submission = chromeDriver.FindElements(By.XPath(xpath));
-            }
 
             if (submission.Count > 0)
             {
@@ -298,9 +322,9 @@ namespace transtrusttool
                         abuttonpd_job_info_action.Click();
                     }
                     WaitLoading();
-                    System.Threading.Thread.Sleep(5000);
 
                     // pdSubmissionBudgetJobInfoColumnRadioAccept
+                    WaitAjaxLoading(By.XPath("//div[contains(@class, 'x-grid-radio-col')]"));
                     ReadOnlyCollection<IWebElement> pdSubmissionBudgetJobInfoColumnRadioAccept = chromeDriver.FindElements(By.XPath("//div[contains(@class, 'x-grid-radio-col')]"));
                     if (pdSubmissionBudgetJobInfoColumnRadioAccept.Count > 0)
                     {
@@ -309,6 +333,7 @@ namespace transtrusttool
                     }
 
                     //checkbox-inputEl
+                    WaitAjaxLoading(By.XPath("//label[contains(@id, 'checkbox-') and contains(@id, '-boxLabelEl')]"));
                     ReadOnlyCollection<IWebElement> checkboxinputEl = chromeDriver.FindElements(By.XPath("//label[contains(@id, 'checkbox-') and contains(@id, '-boxLabelEl')]"));
                     if (checkboxinputEl.Count > 0)
                     {
@@ -317,6 +342,7 @@ namespace transtrusttool
                     }
 
                     //buttonSubmit
+                    WaitAjaxLoading(By.XPath("//span[text()='Submit' and contains(@id, 'btnInnerEl')]"));
                     ReadOnlyCollection<IWebElement> buttonSubmit = chromeDriver.FindElements(By.XPath("//span[text()='Submit' and contains(@id, 'btnInnerEl')]"));
                     if (buttonSubmit.Count > 0)
                     {
@@ -333,7 +359,8 @@ namespace transtrusttool
                     try
                     {
                         // button -- Close
-                        System.Threading.Thread.Sleep(5000);
+                        WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+                        WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
                         ReadOnlyCollection<IWebElement> buttonClose1 = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
                         if (buttonClose1.Count > 0)
                         {
@@ -342,24 +369,6 @@ namespace transtrusttool
                             if (tbuttonClose1 == "a")
                             {
                                 abuttonClose1.Click();
-                            }
-                            WaitLoading();
-                        }
-                    }
-                    catch {}
-
-                    try
-                    {
-                        // button -- Close
-                        System.Threading.Thread.Sleep(5000);
-                        ReadOnlyCollection<IWebElement> buttonClose2 = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
-                        if (buttonClose2.Count > 0)
-                        {
-                            IWebElement abuttonClose2 = buttonClose2.Last().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
-                            string tbuttonClose2 = abuttonClose2.TagName;
-                            if (tbuttonClose2 == "a")
-                            {
-                                abuttonClose2.Click();
                             }
                             WaitLoading();
                         }
@@ -376,14 +385,14 @@ namespace transtrusttool
                 logWriter.LogWrite("Not submission!");
             }
 
-            System.Threading.Thread.Sleep(5000);
+            System.Threading.Thread.Sleep(10000);
             logWriter.LogWrite("Done!");
         }
 
         private void WaitAjaxLoading(By byFinter)
         {
             // wait loading
-            WebDriverWait wait = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(30));
+            WebDriverWait wait = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(5));
             Func<IWebDriver, bool> waitLoading = new Func<IWebDriver, bool>((IWebDriver Web) =>
             {
                 try
