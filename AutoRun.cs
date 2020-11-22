@@ -157,12 +157,12 @@ namespace transtrusttool
             if (url.Contains("gl-tdcprod1.translations.com/PD/login") || url.Contains("gl-tptprod1.transperfect.com/PD/login"))
             {
                 // confirm login
+                WaitAjaxLoading(By.Id("loginwithemail-button"));
                 ReadOnlyCollection<IWebElement> eloginwithemailbutton = chromeDriver.FindElements(By.Id("loginwithemail-button"));
                 if (eloginwithemailbutton.Count > 0)
                 {
                     eloginwithemailbutton.First().Click();
                     WaitLoading();
-                    System.Threading.Thread.Sleep(1000);
                     logWriter.LogWrite("login with email...");
                 }
             }
@@ -171,46 +171,47 @@ namespace transtrusttool
             if (url.Contains("sso.transperfect.com/Account/Login"))
             {
                 // SendKeys email
+                WaitAjaxLoading(By.Id("Email"));
                 ReadOnlyCollection<IWebElement> eEmails = chromeDriver.FindElements(By.Id("Email"));
                 if (eEmails.Count > 0)
                 {
                     eEmails.First().Clear(); ;
                     eEmails.First().SendKeys(email);
-                    System.Threading.Thread.Sleep(1000);
                 }
 
                 // SendKeys password /Password
+                WaitAjaxLoading(By.Id("Password"));
                 ReadOnlyCollection<IWebElement> ePasswords = chromeDriver.FindElements(By.Id("Password"));
                 if (ePasswords.Count == 0)
                 {
                     // SubmitLogin
+                    WaitAjaxLoading(By.Id("SubmitLogin"));
                     ReadOnlyCollection<IWebElement> SubmitLogin = chromeDriver.FindElements(By.Id("SubmitLogin"));
                     if (SubmitLogin.Count > 0)
                     {
                         SubmitLogin.First().Click();
                         WaitLoading();
-                        System.Threading.Thread.Sleep(1000);
                         ePasswords = chromeDriver.FindElements(By.Id("Password"));
                     }
                 }
-                System.Threading.Thread.Sleep(1000);
+
                 if (ePasswords.Count > 0)
                 {
                     ePasswords.First().Clear(); ;
                     ePasswords.First().SendKeys(pass);
-                    System.Threading.Thread.Sleep(1000);
                 }
 
                 // SubmitLogin2
-                System.Threading.Thread.Sleep(1000);
+                WaitAjaxLoading(By.Id("SubmitLogin"));
                 ReadOnlyCollection<IWebElement> SubmitLogin2 = chromeDriver.FindElements(By.Id("SubmitLogin"));
                 if (SubmitLogin2.Count > 0)
                 {
+                    System.Threading.Thread.Sleep(1000);
                     SubmitLogin2.First().Click();
                     WaitLoading();
-                    System.Threading.Thread.Sleep(1000);
                 }
 
+                System.Threading.Thread.Sleep(5000);
                 logWriter.LogWrite("login...");
             }
 
