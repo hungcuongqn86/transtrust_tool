@@ -157,6 +157,7 @@ namespace transtrusttool
             if (url.Contains("gl-tdcprod1.translations.com/PD/login") || url.Contains("gl-tptprod1.transperfect.com/PD/login"))
             {
                 // confirm login
+                System.Threading.Thread.Sleep(3000);
                 WaitAjaxLoading(By.Id("loginwithemail-button"));
                 ReadOnlyCollection<IWebElement> eloginwithemailbutton = chromeDriver.FindElements(By.Id("loginwithemail-button"));
                 if (eloginwithemailbutton.Count > 0)
