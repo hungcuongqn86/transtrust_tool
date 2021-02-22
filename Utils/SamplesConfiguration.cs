@@ -13,7 +13,7 @@ namespace transtrusttool.Utils
     {
         #region Fields
 
-        private string _imap4Server, _imap4UserName, _imap4Password, _transperfectEmail, _transperfectPass, _imap4Server2, _imap4UserName2, _imap4Password2, _transperfectEmail2, _transperfectPass2;
+        private string _imap4Server, _imap4UserName, _imap4Password, _transperfectEmail, _transperfectPass;
 
         private const string _FILE_NAME_ = "Config.xml";
 
@@ -106,76 +106,6 @@ namespace transtrusttool.Utils
                 _transperfectPass = value;
             }
         }
-
-        [System.Xml.Serialization.XmlElementAttribute("imap4server2", DataType = "string")]
-        public string Imap4Server2
-        {
-            get
-            {
-                return _imap4Server2;
-            }
-
-            set
-            {
-                _imap4Server2 = value;
-            }
-        }
-
-        [System.Xml.Serialization.XmlElementAttribute("imap4username2", DataType = "string")]
-        public string Imap4UserName2
-        {
-            get
-            {
-                return _imap4UserName2;
-            }
-
-            set
-            {
-                _imap4UserName2 = value;
-            }
-        }
-
-        [System.Xml.Serialization.XmlElementAttribute("imap4password2", DataType = "string")]
-        public string Imap4Password2
-        {
-            get
-            {
-                return _imap4Password2;
-            }
-
-            set
-            {
-                _imap4Password2 = value;
-            }
-        }
-
-        [System.Xml.Serialization.XmlElementAttribute("transperfectemail2", DataType = "string")]
-        public string TransperfectEmail2
-        {
-            get
-            {
-                return _transperfectEmail2;
-            }
-
-            set
-            {
-                _transperfectEmail2 = value;
-            }
-        }
-
-        [System.Xml.Serialization.XmlElementAttribute("transperfectpass2", DataType = "string")]
-        public string TransperfectPass2
-        {
-            get
-            {
-                return _transperfectPass2;
-            }
-
-            set
-            {
-                _transperfectPass2 = value;
-            }
-        }
         #endregion
 
         #region Methods
@@ -187,12 +117,6 @@ namespace transtrusttool.Utils
             _imap4Password = "yourpassword";
             _transperfectEmail = "user1@example.com";
             _transperfectPass = "yourpassword";
-
-            _imap4Server2 = "mail.example.com";
-            _imap4UserName2 = "user1@example.com";
-            _imap4Password2 = "yourpassword";
-            _transperfectEmail2 = "user1@example.com";
-            _transperfectPass2 = "yourpassword";
         }
 
         public void Save()

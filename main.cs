@@ -27,7 +27,6 @@ namespace transtrusttool
             InitializeComponent();
             thisForm = this;
             label1.Text = this.Configuration.TransperfectEmail;
-            label2.Text = this.Configuration.TransperfectEmail2;
         }
 
         public SamplesConfiguration Configuration
@@ -71,12 +70,7 @@ namespace transtrusttool
 
         private void Loading(bool status)
         {
-            btnAuto1.Enabled = status;
-            btnAuto2.Enabled = status;
-            account1_start_btn.Enabled = status;
-            account1TptRun.Enabled = status;
-            account2_start_btn.Enabled = status;
-            account2TptRun.Enabled = status;
+            btnAuto1.Enabled = status; 
         }
 
         private void BtnAuto1_Click(object sender, EventArgs e)
@@ -93,81 +87,12 @@ namespace transtrusttool
             this.idleTask = this.idleClient.RunAsync();
         }
 
-        private void Btn_stop1_Click(object sender, EventArgs e)
-        {
-            logWriter.LogWrite("btn_stop1_Click...");
-            Loading(true);
-            this.idleClient.Exit();
-            this.idleTask.GetAwaiter().GetResult();
-        }
-
-        private void BtnAuto2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("This will close down the whole application. Confirm?", "Close Application", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 System.Windows.Forms.Application.Exit();
             }
-        }
-
-        private void Account1_start_btn_Click(object sender, EventArgs e)
-        {
-            Loading(false);
-            logWriter.LogWrite("------------------------------------------------");
-            logWriter.LogWrite("account1_start_btn_Click");
-            /*using (var autoDriver = new AutoRun())
-            {
-                autoDriver.submissionId = "0623307";
-                autoDriver.avaliableUrl = autoDriver.tdcAvaliableUrl;
-                autoDriver.Autoget(this.Configuration.Imap4UserName, this.Configuration.TransperfectEmail, this.Configuration.TransperfectPass);
-            }*/
-            Loading(true);
-        }
-
-        private void Account2_start_btn_Click(object sender, EventArgs e)
-        {
-            Loading(false);
-            logWriter.LogWrite("------------------------------------------------");
-            logWriter.LogWrite("account1_start_btn_Click");
-            /*using (var autoDriver = new AutoRun())
-            {
-                // autoDriver.submissionId = "0614938";
-                autoDriver.avaliableUrl = autoDriver.tdcAvaliableUrl;
-                autoDriver.Autoget(this.Configuration.Imap4UserName2, this.Configuration.TransperfectEmail2, this.Configuration.TransperfectPass2);
-            }*/
-            Loading(true);
-        }
-
-        private void Account1TptRun_Click(object sender, EventArgs e)
-        {
-            Loading(false);
-            logWriter.LogWrite("------------------------------------------------");
-            logWriter.LogWrite("account1TptRun_Click");
-            /*using (var autoDriver = new AutoRun())
-            {
-                // autoDriver.submissionId = "0614938";
-                autoDriver.avaliableUrl = autoDriver.tptAvaliableUrl;
-                autoDriver.Autoget(this.Configuration.Imap4UserName, this.Configuration.TransperfectEmail, this.Configuration.TransperfectPass);
-            }*/
-            Loading(true);
-        }
-
-        private void Account2TptRun_Click(object sender, EventArgs e)
-        {
-            Loading(false);
-            logWriter.LogWrite("------------------------------------------------");
-            logWriter.LogWrite("account2TptRun_Click");
-            /*using (var autoDriver = new AutoRun())
-            {
-                // autoDriver.submissionId = "0614938";
-                autoDriver.avaliableUrl = autoDriver.tptAvaliableUrl;
-                autoDriver.Autoget(this.Configuration.Imap4UserName2, this.Configuration.TransperfectEmail2, this.Configuration.TransperfectPass2);
-            }*/
-            Loading(true);
         }
 
         private void Btn_stop2_Click(object sender, EventArgs e)
