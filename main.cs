@@ -75,7 +75,7 @@ namespace transtrusttool
 
         private void BtnAuto1_Click(object sender, EventArgs e)
         {
-            logWriter.LogWrite("btnAuto1_Click...");
+            logWriter.LogWrite("btnAuto_Click...");
             Loading(false);
             this.idleClient = new IdleClient(
                 this.Configuration.Imap4Server, 993, SslOptions, 

@@ -24,7 +24,6 @@ namespace transtrusttool
         public bool working = false;
         public string email;
         public string pass;
-        static System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
         private bool popup = false;
 
         public AutoRun(string imap4UserName, string email, string pass)
@@ -53,34 +52,9 @@ namespace transtrusttool
             options.AddArgument("disable-infobars");
             options.AddArgument("--disable-extensions");
             options.AddArgument("--start-maximized");
-            chromeDriver = new ChromeDriver(options)
-            {
-                Url = tdcAvaliableUrl
-            };
-            chromeDriver.Navigate();
-            WaitLoading();
-
-            login();
-
-            // button-1217 -- Close
-            WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
-            WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
-            ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
-            if (buttonClose.Count > 0)
-            {
-                popup = true;
-                IWebElement abuttonClose = buttonClose.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
-                string tbuttonClose = abuttonClose.TagName;
-                if (tbuttonClose == "a")
-                {
-                    abuttonClose.Click();
-                }
-                WaitLoading();
-            }
-
-            myTimer.Tick += new EventHandler(TimerEventProcessor);
-            myTimer.Interval = 180000;
-            myTimer.Start();
+            var driverService = ChromeDriverService.CreateDefaultService();
+            driverService.HideCommandPromptWindow = true;
+            chromeDriver = new ChromeDriver(driverService, options);
         }
 
         private void TimerEventProcessor(Object myObject,
