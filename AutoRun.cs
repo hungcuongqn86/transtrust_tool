@@ -200,22 +200,19 @@ namespace transtrusttool
             }
 
             //-- Close
-            if (popup)
+            WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+            ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+            if (buttonClose.Count > 0)
             {
-                WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
-                ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
-                if (buttonClose.Count > 0)
+                popup = true;
+                IWebElement abuttonClose = buttonClose.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                string tbuttonClose = abuttonClose.TagName;
+                if (tbuttonClose == "a")
                 {
-                    popup = true;
-                    IWebElement abuttonClose = buttonClose.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
-                    string tbuttonClose = abuttonClose.TagName;
-                    if (tbuttonClose == "a")
-                    {
-                        abuttonClose.Click();
-                    }
-                    logWriter.LogWrite("Check login - Close popup ...");
-                    WaitLoading();
+                    abuttonClose.Click();
                 }
+                logWriter.LogWrite("Check login - Close popup ...");
+                WaitLoading();
             }
         }
 
@@ -278,7 +275,6 @@ namespace transtrusttool
             }
 
             WaitAjaxLoading(By.XPath(xpath));
-            WaitAjaxLoading(By.XPath(xpath));
             ReadOnlyCollection<IWebElement> submission = chromeDriver.FindElements(By.XPath(xpath));
 
             if (submission.Count > 0)
@@ -335,7 +331,6 @@ namespace transtrusttool
                     try
                     {
                         // button -- Close
-                        WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
                         WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
                         ReadOnlyCollection<IWebElement> buttonClose1 = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
                         if (buttonClose1.Count > 0)
