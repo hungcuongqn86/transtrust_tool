@@ -55,6 +55,11 @@ namespace transtrusttool
             var driverService = ChromeDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = true;
             chromeDriver = new ChromeDriver(driverService, options);
+
+            // Test
+            // avaliableUrl = tptAvaliableUrl;
+            // chromeDriver.Navigate().GoToUrl(avaliableUrl);
+            // Login();
         }
 
         private void TimerEventProcessor(Object myObject,
@@ -77,7 +82,7 @@ namespace transtrusttool
                             buttonClose.First().Click();
                         }
                         WaitLoading();
-                        login();
+                        Login();
                     }
                 }
 
@@ -94,7 +99,7 @@ namespace transtrusttool
                             abuttonClose.Click();
                         }
                         WaitLoading();
-                        login();
+                        Login();
                     }
                 }
 
@@ -102,7 +107,7 @@ namespace transtrusttool
                 ReadOnlyCollection<IWebElement> loginForm = chromeDriver.FindElements(By.Id("loginForm"));
                 if (loginForm.Count > 0)
                 {
-                    login();
+                    Login();
                 }
 
                 // button-1217 -- Close
@@ -123,96 +128,67 @@ namespace transtrusttool
             }
         }
 
-        private void login()
+        private bool Login()
         {
-            // System.Threading.Thread.Sleep(5000);
-            // If nologin
-            string url = chromeDriver.Url;
-            if (url.Contains("gl-tdcprod1.translations.com/PD/login") || url.Contains("gl-tptprod1.transperfect.com/PD/login"))
+            try
             {
-                // confirm login
-                System.Threading.Thread.Sleep(3000);
-                WaitAjaxLoading(By.Id("loginwithemail-button"));
-                ReadOnlyCollection<IWebElement> eloginwithemailbutton = chromeDriver.FindElements(By.Id("loginwithemail-button"));
-                if (eloginwithemailbutton.Count > 0)
+                string url = chromeDriver.Url;
+                if (url.Contains("sso.transperfect.com/Account/Login"))
                 {
-                    eloginwithemailbutton.First().Click();
-                    WaitLoading();
-                    logWriter.LogWrite("login with email...");
-                }
-            }
+                    // SendKeys email
+                    string inputStr = "Email";
+                    WaitAjaxLoading(By.Id(inputStr));
+                    IWebElement input = chromeDriver.FindElement(By.Id(inputStr));
+                    input.Clear(); ;
+                    input.SendKeys(email);
+                    Delay(500);
 
-            url = chromeDriver.Url;
-            if (url.Contains("sso.transperfect.com/Account/Login"))
-            {
-                // SendKeys email
-                WaitAjaxLoading(By.Id("Email"));
-                ReadOnlyCollection<IWebElement> eEmails = chromeDriver.FindElements(By.Id("Email"));
-                if (eEmails.Count > 0)
-                {
-                    eEmails.First().Clear(); ;
-                    eEmails.First().SendKeys(email);
-                }
+                    // SendKeys password /Password
+                    inputStr = "Password";
+                    WaitAjaxLoading(By.Id(inputStr));
+                    input = chromeDriver.FindElement(By.Id(inputStr));
+                    input.Clear(); ;
+                    input.SendKeys(pass);
+                    Delay(500);
 
-                // SendKeys password /Password
-                WaitAjaxLoading(By.Id("Password"));
-                ReadOnlyCollection<IWebElement> ePasswords = chromeDriver.FindElements(By.Id("Password"));
-                if (ePasswords.Count == 0)
-                {
-                    // SubmitLogin
+                    // SubmitLogin2
                     WaitAjaxLoading(By.Id("SubmitLogin"));
                     ReadOnlyCollection<IWebElement> SubmitLogin = chromeDriver.FindElements(By.Id("SubmitLogin"));
                     if (SubmitLogin.Count > 0)
                     {
                         SubmitLogin.First().Click();
                         WaitLoading();
-                        ePasswords = chromeDriver.FindElements(By.Id("Password"));
                     }
                 }
 
-                if (ePasswords.Count > 0)
+                WaitLoading();
+                url = chromeDriver.Url;
+                if (url.Contains("sso.transperfect.com/Account/Login"))
                 {
-                    ePasswords.First().Clear(); ;
-                    ePasswords.First().SendKeys(pass);
+                    logWriter.LogWrite("Login fall!");
                 }
 
-                // SubmitLogin2
-                WaitAjaxLoading(By.Id("SubmitLogin"));
-                ReadOnlyCollection<IWebElement> SubmitLogin2 = chromeDriver.FindElements(By.Id("SubmitLogin"));
-                if (SubmitLogin2.Count > 0)
+                //-- Close
+                WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+                ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
+                if (buttonClose.Count > 0)
                 {
-                    System.Threading.Thread.Sleep(1000);
-                    SubmitLogin2.First().Click();
+                    popup = true;
+                    IWebElement abuttonClose = buttonClose.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                    string tbuttonClose = abuttonClose.TagName;
+                    if (tbuttonClose == "a")
+                    {
+                        abuttonClose.Click();
+                    }
+                    logWriter.LogWrite("Check login - Close popup ...");
                     WaitLoading();
                 }
 
-                System.Threading.Thread.Sleep(5000);
-                logWriter.LogWrite("login...");
+                return true;
             }
-
-            url = chromeDriver.Url;
-            if (url.Contains("sso.transperfect.com/Account/Login"))
+            catch
             {
-                logWriter.LogWrite("Login fall!");
-                chromeDriver.Quit();
-                MessageBox.Show("Login fall!", "Login...", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            //-- Close
-            WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
-            ReadOnlyCollection<IWebElement> buttonClose = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
-            if (buttonClose.Count > 0)
-            {
-                popup = true;
-                IWebElement abuttonClose = buttonClose.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
-                string tbuttonClose = abuttonClose.TagName;
-                if (tbuttonClose == "a")
-                {
-                    abuttonClose.Click();
-                }
-                logWriter.LogWrite("Check login - Close popup ...");
-                WaitLoading();
+                return false;
             }
         }
 
@@ -239,97 +215,81 @@ namespace transtrusttool
                 avaliableUrl = tptAvaliableUrl;
             }
 
-            // Open newtab
-            chromeDriver.SwitchTo().Window(chromeDriver.WindowHandles.First());
-            System.Threading.Thread.Sleep(1000);
-            ReadOnlyCollection<IWebElement> availableTab = chromeDriver.FindElements(By.XPath("//a[contains(@href, 'translations.com')]"));
-            if (availableTab.Count > 0)
-            {
-                IWebElement availableLink = availableTab.First();
-                String selectLinkOpeninNewTab = Keys.Control + Keys.Return;
-                availableLink.SendKeys(selectLinkOpeninNewTab);
-                WaitLoading();
-                chromeDriver.SwitchTo().Window(chromeDriver.WindowHandles.Last());
-                chromeDriver.Navigate().GoToUrl(avaliableUrl);
-                WaitLoading();
-                Autoget();
-                chromeDriver.Close();
-            }
-            chromeDriver.SwitchTo().Window(chromeDriver.WindowHandles.First());
+            chromeDriver.Navigate().GoToUrl(avaliableUrl);
+            WaitLoading();
+            Autoget();
             working = false;
         }
 
         public void Autoget()
         {
-            login();
-
-            //select submission
-            string xpath;
-            if (String.IsNullOrEmpty(this.submissionId))
+            Login();
+            try
             {
-                xpath = "//div[contains(@class, 'x-grid-cell-inner')]";
-            }
-            else
-            {
-                xpath = "//div[contains(text(),'" + this.submissionId + "') and contains(@class, 'x-grid-cell-inner')]";
-            }
-
-            WaitAjaxLoading(By.XPath(xpath));
-            ReadOnlyCollection<IWebElement> submission = chromeDriver.FindElements(By.XPath(xpath));
-
-            if (submission.Count > 0)
-            {
-                submission.First().FindElement(By.XPath("..")).Click();
-                WaitLoading();
-                System.Threading.Thread.Sleep(1000);
-
-                ReadOnlyCollection<IWebElement> buttonpd_job_info_action = chromeDriver.FindElements(By.XPath("//span[text()='Job Info' and contains(@id, 'pd_job_info_action')]"));
-                if (buttonpd_job_info_action.Count > 0)
+                //select submission
+                string xpath;
+                if (String.IsNullOrEmpty(this.submissionId))
                 {
-                    logWriter.LogWrite("SubmissionID = " + submission.First().Text);
-                    IWebElement abuttonpd_job_info_action = buttonpd_job_info_action.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
-                    string tbuttonpd_job_info_action = abuttonpd_job_info_action.TagName;
-                    if (tbuttonpd_job_info_action == "a")
-                    {
-                        abuttonpd_job_info_action.Click();
-                    }
-                    WaitLoading();
+                    xpath = "//div[contains(@class, 'x-grid-cell-inner')]";
+                }
+                else
+                {
+                    xpath = "//div[contains(text(),'" + this.submissionId + "') and contains(@class, 'x-grid-cell-inner')]";
+                }
 
-                    // pdSubmissionBudgetJobInfoColumnRadioAccept
-                    WaitAjaxLoading(By.XPath("//div[contains(@class, 'x-grid-radio-col')]"));
-                    ReadOnlyCollection<IWebElement> pdSubmissionBudgetJobInfoColumnRadioAccept = chromeDriver.FindElements(By.XPath("//div[contains(@class, 'x-grid-radio-col')]"));
-                    if (pdSubmissionBudgetJobInfoColumnRadioAccept.Count > 0)
-                    {
-                        pdSubmissionBudgetJobInfoColumnRadioAccept.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
-                        WaitLoading();
-                    }
+                WaitAjaxLoading(By.XPath(xpath));
+                ReadOnlyCollection<IWebElement> submission = chromeDriver.FindElements(By.XPath(xpath));
 
-                    //checkbox-inputEl
-                    WaitAjaxLoading(By.XPath("//label[contains(@id, 'checkbox-') and contains(@id, '-boxLabelEl')]"));
-                    ReadOnlyCollection<IWebElement> checkboxinputEl = chromeDriver.FindElements(By.XPath("//label[contains(@id, 'checkbox-') and contains(@id, '-boxLabelEl')]"));
-                    if (checkboxinputEl.Count > 0)
+                if (submission.Count > 0)
+                {
+                    submission.First().FindElement(By.XPath("..")).Click();
+                    string btnJobInfo = "//span[text()='Job Info' and contains(@id, 'pd_job_info_action')]";
+                    WaitAjaxLoading(By.XPath(btnJobInfo));
+                    ReadOnlyCollection<IWebElement> buttonpd_job_info_action = chromeDriver.FindElements(By.XPath(btnJobInfo));
+                    if (buttonpd_job_info_action.Count > 0)
                     {
-                        checkboxinputEl.First().Click();
-                        WaitLoading();
-                    }
-
-                    //buttonSubmit
-                    WaitAjaxLoading(By.XPath("//span[text()='Submit' and contains(@id, 'btnInnerEl')]"));
-                    ReadOnlyCollection<IWebElement> buttonSubmit = chromeDriver.FindElements(By.XPath("//span[text()='Submit' and contains(@id, 'btnInnerEl')]"));
-                    if (buttonSubmit.Count > 0)
-                    {
-                        IWebElement abuttonSubmit = buttonSubmit.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
-                        string tagname = abuttonSubmit.TagName;
-                        if (tagname == "a")
+                        logWriter.LogWrite("SubmissionID = " + submission.First().Text);
+                        IWebElement abuttonpd_job_info_action = buttonpd_job_info_action.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                        string tbuttonpd_job_info_action = abuttonpd_job_info_action.TagName;
+                        if (tbuttonpd_job_info_action == "a")
                         {
-                            abuttonSubmit.Click();
-                            logWriter.LogWrite("Submit...");
+                            abuttonpd_job_info_action.Click();
                         }
                         WaitLoading();
-                    }
 
-                    try
-                    {
+                        // pdSubmissionBudgetJobInfoColumnRadioAccept
+                        WaitAjaxLoading(By.XPath("//div[contains(@class, 'x-grid-radio-col')]"));
+                        ReadOnlyCollection<IWebElement> pdSubmissionBudgetJobInfoColumnRadioAccept = chromeDriver.FindElements(By.XPath("//div[contains(@class, 'x-grid-radio-col')]"));
+                        if (pdSubmissionBudgetJobInfoColumnRadioAccept.Count > 0)
+                        {
+                            pdSubmissionBudgetJobInfoColumnRadioAccept.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
+                            WaitLoading();
+                        }
+
+                        //checkbox-inputEl
+                        WaitAjaxLoading(By.XPath("//label[contains(@id, 'checkbox-') and contains(@id, '-boxLabelEl')]"));
+                        ReadOnlyCollection<IWebElement> checkboxinputEl = chromeDriver.FindElements(By.XPath("//label[contains(@id, 'checkbox-') and contains(@id, '-boxLabelEl')]"));
+                        if (checkboxinputEl.Count > 0)
+                        {
+                            checkboxinputEl.First().Click();
+                            WaitLoading();
+                        }
+
+                        //buttonSubmit
+                        WaitAjaxLoading(By.XPath("//span[text()='Submit' and contains(@id, 'btnInnerEl')]"));
+                        ReadOnlyCollection<IWebElement> buttonSubmit = chromeDriver.FindElements(By.XPath("//span[text()='Submit' and contains(@id, 'btnInnerEl')]"));
+                        if (buttonSubmit.Count > 0)
+                        {
+                            IWebElement abuttonSubmit = buttonSubmit.First().FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                            string tagname = abuttonSubmit.TagName;
+                            if (tagname == "a")
+                            {
+                                abuttonSubmit.Click();
+                                logWriter.LogWrite("Submit...");
+                            }
+                            WaitLoading();
+                        }
+
                         // button -- Close
                         WaitAjaxLoading(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
                         ReadOnlyCollection<IWebElement> buttonClose1 = chromeDriver.FindElements(By.XPath("//span[text()='Close' and contains(@id, 'btnInnerEl')]"));
@@ -344,20 +304,31 @@ namespace transtrusttool
                             WaitLoading();
                         }
                     }
-                    catch {}
+                    else
+                    {
+                        logWriter.LogWrite("Not show Job Info!");
+                    }
                 }
                 else
                 {
-                    logWriter.LogWrite("Not show Job Info!");
+                    logWriter.LogWrite("Not submission!");
                 }
-            }
-            else
-            {
-                logWriter.LogWrite("Not submission!");
-            }
 
-            System.Threading.Thread.Sleep(10000);
-            logWriter.LogWrite("Done!");
+                System.Threading.Thread.Sleep(10000);
+                logWriter.LogWrite("Done!");
+            }
+            catch { }
+        }
+
+        private static void Delay(int Time_delay)
+        {
+            int i = 0;
+            System.Timers.Timer _delayTimer = new System.Timers.Timer();
+            _delayTimer.Interval = Time_delay;
+            _delayTimer.AutoReset = false; //so that it only calls the method once
+            _delayTimer.Elapsed += (s, args) => i = 1;
+            _delayTimer.Start();
+            while (i == 0) { };
         }
 
         private void WaitAjaxLoading(By byFinter)
